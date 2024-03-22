@@ -6,12 +6,14 @@ const resources = {
     translation: {
       devices: "Devices",
       addDevice: "Add device",
+      editDevice: "Edit device",
     },
   },
   es: {
     translation: {
       devices: "Dispositivos",
       addDevice: "Añadir dispositivo",
+      editDevice: "editar dispositivo",
     },
   },
 };

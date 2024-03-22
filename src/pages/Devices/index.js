@@ -11,6 +11,7 @@ import Button from "../../common/Button";
 
 function Devices() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const { t } = useTranslation();
   const theme = useTheme();
   const { deviceList } = useGetDeviceList();
@@ -43,7 +44,11 @@ function Devices() {
           onClickHandler={addDeviceButtonHandler}
         />
       </Grid>
-      <UpsertDialog open={dialogOpen} handleClose={handleDialogClose} />
+      <UpsertDialog
+        open={dialogOpen}
+        handleClose={handleDialogClose}
+        id={selectedDeviceId}
+      />
     </Grid>
   );
 }
