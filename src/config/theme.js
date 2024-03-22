@@ -15,12 +15,20 @@ const theme = createTheme({
     white: {
       main: "#FFFFFF",
     },
+    black: {
+      secondary: "#211F33",
+    },
   },
   typography: {
     fontFamily: "Inter, sans-serif",
     button: {
       fontSize: "14px",
       textTransform: "none",
+    },
+    formInputLabel: {
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "21px",
     },
     h1: {
       fontSize: "20px",
