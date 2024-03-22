@@ -10,7 +10,7 @@ const useGetDeviceData = (id) => {
     try {
       setLoading(true);
       const response = await getDevice(id);
-      setData(response);
+      setData(id === "" ? null : response);
       setLoading(false);
     } catch (error) {
       setError(error);
