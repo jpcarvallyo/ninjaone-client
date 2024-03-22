@@ -14,6 +14,13 @@ const resources = {
         warning: "You are about to delete the device",
         inform: "This action cannot be undone",
       },
+      toast: {
+        createError: "Device creation was unsuccessful",
+        createSuccess: "Device was successfully created",
+        editSuccess: "Device was successfully edited",
+        deleteDeviceSuccess: "Deleted Device Successfully",
+        deleteDeviceError: "Unable to delete device",
+      },
     },
   },
   es: {
@@ -21,10 +28,15 @@ const resources = {
       devices: "Dispositivos",
       addDevice: "Añadir dispositivo",
       editDevice: "editar dispositivo",
+      cancel: "Cancelar",
       delete: {
+        string: "Borrar",
         device: "Eliminar dispositivo",
-        warning: "You are about to delete the device",
-        inform: "This action cannot be undone",
+        warning: "Estás a punto de eliminar el dispositivo.",
+        inform: "Esta acción no se puede deshacer",
+      },
+      toast: {
+        deleteDeviceSuccess: "Dispositivo eliminado exitosamente",
       },
     },
   },
