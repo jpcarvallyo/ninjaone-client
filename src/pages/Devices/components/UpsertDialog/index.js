@@ -8,6 +8,7 @@ import {
   TextField,
   Box,
 } from "@mui/material";
+import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
 import { MenuItem, Select } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,8 +19,22 @@ import Button from "../../../../ui-kit/Button";
 import { OS } from "../../../../utils/";
 import useCreateDevice from "../../../../api/devices/mutations/useCreateDevice";
 import useUpdateDevice from "../../../../api/devices/mutations/useUpdateDevice";
+import useGetDevice from "../../../../api/devices/queries/useGetDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
+  const { data: deviceData } = useGetDevice(id);
+  // Initialize initialValues with deviceData if it exists
+  const initialValues = deviceData
+    ? {
+        name: deviceData.system_name,
+        deviceType: deviceData.type,
+        hddCapacity: deviceData.hdd_capacity,
+      }
+    : {
+        name: "",
+        deviceType: "",
+        hddCapacity: "",
+      };
   const {
     postData,
     data: createDeviceDataResponse,
@@ -32,6 +47,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
     loading: updateDeviceDataLoading,
     error: updateDeviceDataError,
   } = useUpdateDevice();
+
   const { t } = useTranslation();
   const osOptions = Object.values(OS);
 
@@ -40,11 +56,19 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
       // Create
       if (id === "") {
         await postData(values);
-        console.log(createDeviceDataResponse);
+        if (createDeviceDataResponse) {
+          toast.success(t("toast.createSuccess"));
+          console.log(createDeviceDataResponse);
+        } else {
+          toast.error(t("toast.createError"));
+        }
       } else {
         // Update
         await updateDeviceData(id, values);
-        console.log("updateDeviceDataResponse: ", updateDeviceDataResponse);
+        if (updateDeviceDataResponse) {
+          toast.success(t("toast.editSuccess"));
+          console.log("updateDeviceDataResponse: ", updateDeviceDataResponse);
+        }
       }
 
       handleClose();
@@ -80,11 +104,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
 
       <DialogContent>
         <Formik
-          initialValues={{
-            name: "",
-            deviceType: "",
-            hddCapacity: "",
-          }}
+          initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
@@ -160,6 +180,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   type="submit"
                   autoFocus
                   text={"Submit"}
+                  variant={"primary"}
                   disabled={!isValid}
                 >
                   Submit
