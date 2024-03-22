@@ -17,9 +17,21 @@ import { InputLabel } from "./InputLabel";
 import Button from "../../../../ui-kit/Button";
 import { OS } from "../../../../utils/";
 import useCreateDevice from "../../../../api/devices/mutations/useCreateDevice";
+import useUpdateDevice from "../../../../api/devices/mutations/useUpdateDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
-  const { postData, data, loading, error } = useCreateDevice();
+  const {
+    postData,
+    data: createDeviceDataResponse,
+    loading: createDeviceDataLoading,
+    error: createDeviceDataError,
+  } = useCreateDevice();
+  const {
+    updateDeviceData,
+    data: updateDeviceDataResponse,
+    loading: updateDeviceDataLoading,
+    error: updateDeviceDataError,
+  } = useUpdateDevice();
   const { t } = useTranslation();
   const osOptions = Object.values(OS);
 
@@ -28,10 +40,11 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
       // Create
       if (id === "") {
         await postData(values);
-        console.log(data);
+        console.log(createDeviceDataResponse);
       } else {
         // Update
-        // await putData(id, values)
+        await updateDeviceData(id, values);
+        console.log("updateDeviceDataResponse: ", updateDeviceDataResponse);
       }
 
       handleClose();
@@ -75,7 +88,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          {({ errors, touched, handleChange, values }) => (
+          {({ errors, touched, handleChange, values, isValid }) => (
             <Form>
               <div>
                 <InputLabel htmlFor={"name"} text={"Name"} required={true} />
@@ -144,10 +157,10 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   variant={"secondary"}
                 />
                 <Button
-                  // onClick={handleSubmit}
                   type="submit"
                   autoFocus
                   text={"Submit"}
+                  disabled={!isValid}
                 >
                   Submit
                 </Button>
