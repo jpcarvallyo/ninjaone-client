@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Button = (props) => {
-  const { icon, text, onClickHandler, variant = "" } = props;
+  const { icon, text, onClickHandler, variant = "", ...restProps } = props;
   const theme = useTheme();
   const primaryStyle = {
     backgroundColor: theme.palette.blue.secondary,
@@ -22,7 +22,7 @@ const Button = (props) => {
     <MuiButton
       style={variant === "secondary" ? secondaryVariantStyle : primaryStyle}
       onClick={onClickHandler}
-      {...props}
+      {...restProps}
     >
       {icon && <FontAwesomeIcon icon={icon} />}
       {text && (
