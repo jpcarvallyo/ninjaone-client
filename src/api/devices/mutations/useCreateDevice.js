@@ -12,7 +12,7 @@ const useCreateDevice = () => {
       setLoading(true);
       const payload = shapeFormDataForPost(formBody);
       const response = await createDevice(payload);
-      setData(response.data);
+      setData(response);
       setLoading(false);
     } catch (error) {
       setError(error);
