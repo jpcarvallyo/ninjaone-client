@@ -20,6 +20,7 @@ const theme = createTheme({
     fontFamily: "Inter, sans-serif",
     button: {
       fontSize: "14px",
+      textTransform: "none",
     },
     h1: {
       fontSize: "20px",

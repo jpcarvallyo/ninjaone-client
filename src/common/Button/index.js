@@ -1,11 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Button as MuiButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Button = ({ icon, text, onClickHandler }) => {
   const theme = useTheme();
-
+  const { t } = useTranslation();
   return (
     <MuiButton
       style={{

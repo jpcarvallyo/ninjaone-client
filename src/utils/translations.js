@@ -5,11 +5,13 @@ const resources = {
   en: {
     translation: {
       devices: "Devices",
+      addDevice: "Add device",
     },
   },
   es: {
     translation: {
       devices: "Dispositivos",
+      addDevice: "Añadir dispositivo",
     },
   },
 };
