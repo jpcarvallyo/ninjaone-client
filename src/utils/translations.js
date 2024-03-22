@@ -7,6 +7,13 @@ const resources = {
       devices: "Devices",
       addDevice: "Add device",
       editDevice: "Edit device",
+      cancel: "Cancel",
+      delete: {
+        string: "Delete",
+        device: "Delete device",
+        warning: "You are about to delete the device",
+        inform: "This action cannot be undone",
+      },
     },
   },
   es: {
@@ -14,6 +21,11 @@ const resources = {
       devices: "Dispositivos",
       addDevice: "Añadir dispositivo",
       editDevice: "editar dispositivo",
+      delete: {
+        device: "Eliminar dispositivo",
+        warning: "You are about to delete the device",
+        inform: "This action cannot be undone",
+      },
     },
   },
 };
