@@ -58,10 +58,8 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         await postData(values);
         if (createDeviceDataResponse) {
           toast.success(t("toast.createSuccess"));
-          console.log(createDeviceDataResponse);
-        } else {
-          toast.error(t("toast.createError"));
         }
+        console.log(createDeviceDataResponse);
       } else {
         // Update
         await updateDeviceData(id, values);

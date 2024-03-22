@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { getDeviceList } from "../fetchers/getDeviceList"; // Import API function
 
-const useGetDeviceList = () => {
+const useGetDeviceList = (refreshList) => {
   const [deviceList, setDeviceList] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ const useGetDeviceList = () => {
     return () => {
       abortController.abort(); // Cancel the request when the component unmounts or when the dependency of the effect changes
     };
-  }, []);
+  }, [refreshList]); // Include refreshList as a dependency
 
   const memoizedDeviceList = useMemo(() => deviceList, [deviceList]);
 
