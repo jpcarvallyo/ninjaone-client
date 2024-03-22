@@ -18,6 +18,9 @@ const theme = createTheme({
     black: {
       secondary: "#211F33",
     },
+    grey: {
+      secondary: "#48446940",
+    },
   },
   typography: {
     fontFamily: "Inter, sans-serif",
