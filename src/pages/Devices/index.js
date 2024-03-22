@@ -6,8 +6,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
-import NavBar from "../../common/NavBar";
-import Button from "../../common/Button";
+import NavBar from "../../ui-kit/NavBar";
+import Button from "../../ui-kit/Button";
 
 function Devices() {
   const [dialogOpen, setDialogOpen] = useState(false);

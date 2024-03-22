@@ -1,5 +1,5 @@
 export const OS = {
-  WINDOWS: "Windows",
-  MAC: "Mac",
-  LINUX: "Linux",
+  WINDOWS: "WINDOWS",
+  MAC: "MAC",
+  LINUX: "LINUX",
 };
