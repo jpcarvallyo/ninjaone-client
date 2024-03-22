@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createDevice } from "../fetchers/createDevice";
 import { shapeFormDataForPost } from "../utils";
 
-const usePostDevice = () => {
+const useCreateDevice = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,4 +23,4 @@ const usePostDevice = () => {
   return { postData, data, loading, error };
 };
 
-export default usePostDevice;
+export default useCreateDevice;

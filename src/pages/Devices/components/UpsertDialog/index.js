@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,11 +14,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { validationSchema } from "./validationSchema";
 import { InputLabel } from "./InputLabel";
+import Button from "../../../../ui-kit/Button";
 import { OS } from "../../../../utils/";
+import useCreateDevice from "../../../../api/devices/mutations/useCreateDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
+  const { postData, data, loading, error } = useCreateDevice();
   const { t } = useTranslation();
   const osOptions = Object.values(OS);
+
+  const handleSubmit = async (values) => {
+    try {
+      // Create
+      if (id === "") {
+        await postData(values);
+        console.log(data);
+      } else {
+        // Update
+        // await putData(id, values)
+      }
+
+      handleClose();
+    } catch (error) {
+      console.error("Error while posting device:", error);
+    }
+  };
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <Box
@@ -39,7 +59,9 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
             marginBottom: "10px",
             color: "#211F33",
             fontWeight: 300,
+            cursor: "pointer",
           }}
+          onClick={handleClose}
         />
       </Box>
 
@@ -50,10 +72,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
             deviceType: "",
             hddCapacity: "",
           }}
-          onSubmit={(values) => {
-            console.log(values); // Handle form submission logic here
-            handleClose();
-          }}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           {({ errors, touched, handleChange, values }) => (
@@ -90,7 +109,9 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   value={values.deviceType}
                 >
                   {osOptions.map((os) => (
-                    <MenuItem value={os}>{os}</MenuItem>
+                    <MenuItem key={os} value={os}>
+                      {os}
+                    </MenuItem>
                   ))}
                 </Field>
                 {touched.deviceType && errors.deviceType && (
@@ -117,8 +138,17 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
               </div>
 
               <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" autoFocus>
+                <Button
+                  onClick={handleClose}
+                  text={"Close"}
+                  variant={"secondary"}
+                />
+                <Button
+                  // onClick={handleSubmit}
+                  type="submit"
+                  autoFocus
+                  text={"Submit"}
+                >
                   Submit
                 </Button>
               </DialogActions>
