@@ -8,20 +8,26 @@ import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
 import NavBar from "../../ui-kit/NavBar";
 import Button from "../../ui-kit/Button";
+import { DeleteDialog } from "./components/DeleteDialog";
 
 function Devices() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedDeviceId, setSelectedDeviceId] = useState("");
+  const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(true);
+  const [selectedDeviceId, setSelectedDeviceId] = useState("QF-NFxnDl");
   const { t } = useTranslation();
   const theme = useTheme();
   const { deviceList } = useGetDeviceList();
   //   console.log(deviceList);
   const addDeviceButtonHandler = () => {
-    setDialogOpen(true);
+    setUpsertDialogOpen(true);
   };
 
-  const handleDialogClose = () => {
-    setDialogOpen(false);
+  const handleUpsertDialogClose = () => {
+    setUpsertDialogOpen(false);
+  };
+
+  const handleDeleteDialogClose = () => {
+    setDeleteDialogOpen(false);
   };
 
   return (
@@ -41,12 +47,18 @@ function Devices() {
         <Button
           icon={faPlus}
           text={t("addDevice")}
+          variant={"primary"}
           onClickHandler={addDeviceButtonHandler}
         />
       </Grid>
       <UpsertDialog
-        open={dialogOpen}
-        handleClose={handleDialogClose}
+        open={upsertDialogOpen}
+        handleClose={handleUpsertDialogClose}
+        id={selectedDeviceId}
+      />
+      <DeleteDialog
+        open={deleteDialogOpen}
+        handleClose={handleDeleteDialogClose}
         id={selectedDeviceId}
       />
     </Grid>

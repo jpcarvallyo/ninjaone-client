@@ -19,7 +19,11 @@ const theme = createTheme({
       secondary: "#211F33",
     },
     grey: {
+      main: "#48446940",
       secondary: "#48446940",
+    },
+    warning: {
+      main: "#D53948",
     },
   },
   typography: {
