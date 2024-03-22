@@ -13,7 +13,7 @@ const useGetDeviceList = () => {
     const fetchDeviceList = async () => {
       try {
         setLoading(true);
-        const deviceListData = await getDeviceList({ signal }); // Pass signal to fetcher function
+        const deviceListData = await getDeviceList(signal); // Pass signal to fetcher function
         setDeviceList(deviceListData);
         setLoading(false);
       } catch (error) {
