@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Grid, Typography, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -12,34 +12,37 @@ import { DeleteDialog } from "./components/DeleteDialog";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const [refreshList, setRefreshList] = useState(false);
   const { t } = useTranslation();
   const theme = useTheme();
   const { deviceList, loading } = useGetDeviceList(refreshList);
-  console.log(deviceList);
 
   useEffect(() => {
     // Reset the refreshList state after refetching the list
     setRefreshList(false);
   }, [deviceList]); // Trigger effect when deviceList changes
+
   const addDeviceButtonHandler = () => {
+    setSelectedDeviceId(""); // Reset selectedDeviceId when adding a new device
     setUpsertDialogOpen(true);
   };
 
   const handleUpsertDialogClose = () => {
     setUpsertDialogOpen(false);
+    setSelectedDeviceId("");
     setRefreshList(true);
   };
 
   const handleDeleteDialogClose = () => {
     setDeleteDialogOpen(false);
+    setSelectedDeviceId("");
     setRefreshList(true);
   };
 
   const handleDeviceItemClick = (id, type) => {
-    setSelectedDeviceId(id);
+    setSelectedDeviceId(id); // Update selectedDeviceId immediately
     if (type === "edit") {
       setUpsertDialogOpen(true);
     } else {
@@ -79,23 +82,22 @@ function Devices() {
           flexDirection: "column",
         }}
       >
-        {deviceList
-          ? deviceList.map((device) => (
-              <Box sx={{ display: "flex" }}>
-                <Typography variant="h1">{device.system_name}</Typography>
-                <Typography variant="h1">{device.type}</Typography>
-                <Typography variant="h1">{device.hdd_capacity}</Typography>
-                {/* <Button
-                  text={"edit"}
-                  onClick={() => handleDeviceItemClick(device.id, "edit")}
-                ></Button>
-                <Button
-                  text={"delete"}
-                  onClick={() => handleDeviceItemClick(device.id, "delete")}
-                ></Button> */}
-              </Box>
-            ))
-          : null}
+        {deviceList &&
+          deviceList.map((device) => (
+            <Box key={device.id} sx={{ display: "flex" }}>
+              <Typography variant="h1">{device.system_name}</Typography>
+              <Typography variant="h1">{device.type}</Typography>
+              <Typography variant="h1">{device.hdd_capacity}</Typography>
+              <Button
+                text={"edit"}
+                onClick={() => handleDeviceItemClick(device.id, "edit")}
+              />
+              <Button
+                text={"delete"}
+                onClick={() => handleDeviceItemClick(device.id, "delete")}
+              />
+            </Box>
+          ))}
       </Grid>
       <UpsertDialog
         open={upsertDialogOpen}

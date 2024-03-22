@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Dialog,
@@ -19,11 +19,26 @@ import Button from "../../../../ui-kit/Button";
 import { OS } from "../../../../utils/";
 import useCreateDevice from "../../../../api/devices/mutations/useCreateDevice";
 import useUpdateDevice from "../../../../api/devices/mutations/useUpdateDevice";
-import useGetDevice from "../../../../api/devices/queries/useGetDevice";
+import { getDevice } from "../../../../api/devices/fetchers/getDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
-  const { data: deviceData } = useGetDevice(id);
-  // Initialize initialValues with deviceData if it exists
+  const [deviceData, setDeviceData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getDevice(id);
+        setDeviceData(response);
+      } catch (error) {
+        console.error("Error fetching device data:", error);
+      }
+    };
+
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
   const initialValues = deviceData
     ? {
         name: deviceData.system_name,
@@ -35,40 +50,21 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         deviceType: "",
         hddCapacity: "",
       };
-  const {
-    postData,
-    data: createDeviceDataResponse,
-    loading: createDeviceDataLoading,
-    error: createDeviceDataError,
-  } = useCreateDevice();
-  const {
-    updateDeviceData,
-    data: updateDeviceDataResponse,
-    loading: updateDeviceDataLoading,
-    error: updateDeviceDataError,
-  } = useUpdateDevice();
 
+  const { postData } = useCreateDevice();
+  const { updateDeviceData } = useUpdateDevice();
   const { t } = useTranslation();
   const osOptions = Object.values(OS);
 
   const handleSubmit = async (values) => {
     try {
-      // Create
-      if (id === "") {
+      if (!id) {
         await postData(values);
-        if (createDeviceDataResponse) {
-          toast.success(t("toast.createSuccess"));
-        }
-        console.log(createDeviceDataResponse);
+        toast.success(t("toast.createSuccess"));
       } else {
-        // Update
         await updateDeviceData(id, values);
-        if (updateDeviceDataResponse) {
-          toast.success(t("toast.editSuccess"));
-          console.log("updateDeviceDataResponse: ", updateDeviceDataResponse);
-        }
+        toast.success(t("toast.editSuccess"));
       }
-
       handleClose();
     } catch (error) {
       console.error("Error while posting device:", error);
@@ -105,6 +101,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
+          enableReinitialize={true}
         >
           {({ errors, touched, handleChange, values, isValid }) => (
             <Form>
