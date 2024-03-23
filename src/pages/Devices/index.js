@@ -160,12 +160,12 @@ function Devices() {
         </Box>
 
         {/* Display filtered device list */}
-        <List>
+        <List sx={{ width: "100%" }}>
           {filteredDeviceList.map((device) => (
             <ListItem key={device.id}>
               <ListItemText
                 primary={device.system_name}
-                secondary={device.type + " | " + device.hdd_capacity}
+                secondary={`${device.type} workstation - ${device.hdd_capacity} GB`}
               />
               <ListItemSecondaryAction>
                 <IconButton
