@@ -12,11 +12,16 @@ import {
   FormGroup,
   FormControlLabel,
   TextField,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { OS } from "../../utils/constants/osConstants";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
 import NavBar from "../../ui-kit/NavBar";
@@ -155,21 +160,32 @@ function Devices() {
         </Box>
 
         {/* Display filtered device list */}
-        {filteredDeviceList.map((device) => (
-          <Box key={device.id} sx={{ display: "flex" }}>
-            <Typography variant="h1">{device.system_name}</Typography>
-            <Typography variant="h1">{device.type}</Typography>
-            <Typography variant="h1">{device.hdd_capacity}</Typography>
-            <Button
-              text={"edit"}
-              onClick={() => handleDeviceItemClick(device.id, "edit")}
-            />
-            <Button
-              text={"delete"}
-              onClick={() => handleDeviceItemClick(device.id, "delete")}
-            />
-          </Box>
-        ))}
+        <List>
+          {filteredDeviceList.map((device) => (
+            <ListItem key={device.id}>
+              <ListItemText
+                primary={device.system_name}
+                secondary={device.type + " | " + device.hdd_capacity}
+              />
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => handleDeviceItemClick(device.id, "edit")}
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => handleDeviceItemClick(device.id, "delete")}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
       </Grid>
       <UpsertDialog
         open={upsertDialogOpen}
