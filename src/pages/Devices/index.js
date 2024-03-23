@@ -33,11 +33,17 @@ function Devices() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const [refreshList, setRefreshList] = useState(false);
-  const [filters, setFilters] = useState({ type: [], capacity: "" });
+  const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
   const { t } = useTranslation();
   const theme = useTheme();
   const { deviceList, loading } = useGetDeviceList(refreshList);
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleOptionChange = (event) => {
+    setSelectedOptions(event.target.value);
+  };
 
   useEffect(() => {
     // Reset the refreshList state after refetching the list
@@ -76,11 +82,12 @@ function Devices() {
   };
 
   // Filter the device list based on filters and search term
+  // Filter the device list based on filters and search term
   const filteredDeviceList = useMemo(() => {
     let filteredList = deviceList || []; // Handle null deviceList
 
-    // Filter by type
-    if (filters.type.length > 0) {
+    // Filter by type if not "All"
+    if (!filters.type.includes(OS.ALL)) {
       filteredList = filteredList.filter((device) =>
         filters.type.includes(device.type)
       );
@@ -131,24 +138,35 @@ function Devices() {
           display: "flex",
           justifyContent: "space-between",
           padding: "24px",
-          alignItems: "center",
+          // alignItems: "center",
           flexDirection: "column",
         }}
       >
-        {/* Filter form */}
-        <Box sx={{ marginBottom: "1rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            paddingLeft: "16px",
+            justifyContent: "flex-start",
+          }}
+        >
           <TextField
             label="Search"
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <FormControl sx={{ marginLeft: "1rem" }}>
-            <InputLabel>Filter Type</InputLabel>
+          <FormControl sx={{ minWidth: 120 }}>
             <Select
+              labelId="demo-multiple-select-label"
+              id="demo-multiple-select"
               multiple
               value={filters.type}
               onChange={(e) => handleFilterChange("type", e.target.value)}
+              renderValue={(selected) =>
+                selected.includes(OS.ALL)
+                  ? "Device Type: All"
+                  : `Device Type: ${selected.join(", ")}`
+              }
             >
               {Object.values(OS).map((os) => (
                 <MenuItem key={os} value={os}>
