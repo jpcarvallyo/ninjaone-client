@@ -11,6 +11,7 @@ import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceListItem from "./components/DeviceListItem";
 import { useTheme } from "@mui/material/styles";
 import ControlPanel from "./components/ControlPanel";
+import ErrorBoundary from "../../ui-kit/ErrorBoundary";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
@@ -170,22 +171,23 @@ function Devices() {
         >
           <Typography>{t("devices")}</Typography>
         </Box>
-
-        <List
-          sx={{
-            width: "100%",
-            borderTop: "1px solid #CBCFD3",
-            paddingTop: "0",
-          }}
-        >
-          {sortedAndFilteredDeviceList.map((device) => (
-            <DeviceListItem
-              key={device.id}
-              device={device}
-              handleDeviceItemClick={handleDeviceItemClick}
-            />
-          ))}
-        </List>
+        <ErrorBoundary>
+          <List
+            sx={{
+              width: "100%",
+              borderTop: "1px solid #CBCFD3",
+              paddingTop: "0",
+            }}
+          >
+            {sortedAndFilteredDeviceList.map((device) => (
+              <DeviceListItem
+                key={device.id}
+                device={device}
+                handleDeviceItemClick={handleDeviceItemClick}
+              />
+            ))}
+          </List>
+        </ErrorBoundary>
       </Grid>
       <UpsertDialog
         open={upsertDialogOpen}

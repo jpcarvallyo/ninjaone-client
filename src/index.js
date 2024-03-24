@@ -9,8 +9,6 @@ import theme from "./config/theme";
 import Devices from "./pages/Devices";
 import "./index.css";
 
-// TODO: add error boundary
-
 const router = createBrowserRouter([
   {
     path: "/",
