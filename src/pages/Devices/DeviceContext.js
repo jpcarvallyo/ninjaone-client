@@ -1,5 +1,6 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
 import { OS } from "utils/constants/osConstants";
+import { SORTING } from "utils/constants/";
 import useGetDeviceList from "api/devices/queries/useGetDeviceList";
 const DevicePageContext = createContext();
 
@@ -11,8 +12,8 @@ export const DevicePageProvider = ({ children }) => {
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
   const [sortCriteria, setSortCriteria] = useState({
-    sortBy: "name",
-    sortOrder: "asc",
+    sortBy: SORTING.NAME,
+    sortOrder: SORTING.ASC,
   });
   const { deviceList, loading } = useGetDeviceList(refreshList);
   const handleSortChange = (event) => {
@@ -63,8 +64,8 @@ export const DevicePageProvider = ({ children }) => {
 
   const handleOnClickReset = () => {
     setSortCriteria({
-      sortBy: "name",
-      sortOrder: "asc",
+      sortBy: SORTING.NAME,
+      sortOrder: SORTING.ASC,
     });
     setFilters({ type: [OS.ALL], capacity: "" });
     setSearchTerm("");
@@ -96,12 +97,12 @@ export const DevicePageProvider = ({ children }) => {
 
     // Sorting logic
     filteredList.sort((a, b) => {
-      if (sortCriteria.sortBy === "name") {
-        return sortCriteria.sortOrder === "asc"
+      if (sortCriteria.sortBy === SORTING.NAME) {
+        return sortCriteria.sortOrder === SORTING.ASC
           ? a.system_name.localeCompare(b.system_name)
           : b.system_name.localeCompare(a.system_name);
-      } else if (sortCriteria.sortBy === "capacity") {
-        return sortCriteria.sortOrder === "asc"
+      } else if (sortCriteria.sortBy === SORTING.CAPACITY) {
+        return sortCriteria.sortOrder === SORTING.ASC
           ? a.hdd_capacity - b.hdd_capacity
           : b.hdd_capacity - a.hdd_capacity;
       }
