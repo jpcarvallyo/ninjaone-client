@@ -7,7 +7,12 @@ export default function NavBar() {
   return (
     <AppBar
       position="static"
-      style={{ backgroundColor: theme.palette.blue.main, position: "relative" }}
+      sx={{
+        boxShadow: "none",
+        backgroundColor: theme.palette.blue.main,
+        position: "relative",
+        borderBottom: "1px solid #E8E8EA",
+      }}
     >
       <Toolbar sx={{ marginLeft: "8px" }}>
         <HomeLogo />

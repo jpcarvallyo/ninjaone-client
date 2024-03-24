@@ -3,7 +3,14 @@ import { Menu, MenuItem, IconButton, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-function EditDeleteMenu({ itemId, handleDeviceItemClick }) {
+import { useTheme } from "@mui/material/styles";
+function EditDeleteMenu({
+  itemId,
+  handleDeviceItemClick,
+  handleListItemHover,
+  handleListItemLeave,
+}) {
+  const theme = useTheme();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -27,8 +34,16 @@ function EditDeleteMenu({ itemId, handleDeviceItemClick }) {
         aria-controls={`menu-${itemId}`}
         aria-haspopup="true"
         onClick={handleClick}
+        onMouseEnter={handleListItemHover}
+        onMouseLeave={handleListItemLeave}
+        sx={{
+          borderRadius: "4px",
+          "&:hover, &.Mui-focusVisible": {
+            backgroundColor: theme.palette.grey.iconButton,
+          },
+        }}
       >
-        <FontAwesomeIcon icon={faEllipsis} />
+        <FontAwesomeIcon style={{ height: "14px" }} icon={faEllipsis} />
       </IconButton>
       <Menu
         id={`menu-${itemId}`}

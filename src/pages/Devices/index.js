@@ -22,6 +22,7 @@ import Button from "../../ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceLogo from "./components/DeviceLogo";
 import EditDeleteMenu from "./components/EditDeleteMenu.js";
+import { useTheme } from "@mui/material/styles";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
@@ -30,16 +31,26 @@ function Devices() {
   const [refreshList, setRefreshList] = useState(false);
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
+  const [hoveredItem, setHoveredItem] = useState(null);
+
   const { t } = useTranslation();
+  const theme = useTheme();
   const { deviceList, loading } = useGetDeviceList(refreshList);
 
   useEffect(() => {
-    // Reset the refreshList state after refetching the list
     setRefreshList(false);
-  }, [deviceList]); // Trigger effect when deviceList changes
+  }, [deviceList]);
+
+  const handleListItemHover = (itemId) => {
+    setHoveredItem(itemId);
+  };
+
+  const handleListItemLeave = () => {
+    setHoveredItem(null);
+  };
 
   const addDeviceButtonHandler = () => {
-    setSelectedDeviceId(""); // Reset selectedDeviceId when adding a new device
+    setSelectedDeviceId("");
     setUpsertDialogOpen(true);
   };
 
@@ -134,25 +145,24 @@ function Devices() {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          padding: "24px",
+          padding: "16px",
           flexDirection: "column",
         }}
       >
-        <Grid
+        <Box
           item
           sx={{
             display: "flex",
-            paddingLeft: "16px",
             justifyContent: "flex-start",
           }}
         >
           <TextField
-            // label="Search"
             placeholder="Search"
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             sx={{
+              marginRight: "8px",
               "& .MuiOutlinedInput-input": {
                 height: "5px",
               },
@@ -184,21 +194,42 @@ function Devices() {
               ))}
             </Select>
           </FormControl>
-        </Grid>
-        <Grid
+        </Box>
+        <Box
           item
           sx={{
             marginLeft: "16px",
             marginTop: "20px",
+            marginBottom: "8px",
             typography: "listHeading",
           }}
         >
           <Typography>{t("devices")}</Typography>
-        </Grid>
+        </Box>
 
-        <List sx={{ width: "100%" }}>
+        <List
+          sx={{
+            width: "100%",
+            borderTop: "1px solid #CBCFD3",
+            paddingTop: "0",
+          }}
+        >
           {filteredDeviceList.map((device) => (
-            <ListItem key={device.id}>
+            <ListItem
+              key={device.id}
+              onMouseEnter={() => handleListItemHover(device.id)}
+              onMouseLeave={handleListItemLeave}
+              sx={{
+                borderBottom: "1px solid #E7E8EB",
+                height: "52px",
+                "&:hover": {
+                  bgcolor:
+                    hoveredItem === device.id
+                      ? theme.palette.grey.contrast
+                      : "transparent",
+                },
+              }}
+            >
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <DeviceLogo system={device.type} />
@@ -224,6 +255,8 @@ function Devices() {
                 <EditDeleteMenu
                   itemId={device.id}
                   handleDeviceItemClick={handleDeviceItemClick}
+                  handleListItemHover={() => handleListItemHover(device.id)}
+                  handleListItemLeave={handleListItemLeave}
                 />
               </ListItemSecondaryAction>
             </ListItem>
