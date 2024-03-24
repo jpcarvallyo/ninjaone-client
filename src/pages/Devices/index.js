@@ -1,17 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Grid,
-  Typography,
-  Box,
-  FormControl,
-  Select,
-  MenuItem,
-  TextField,
-  List,
-  InputAdornment,
-} from "@mui/material";
-import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Grid, Typography, Box, List } from "@mui/material";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { OS } from "../../utils/constants/osConstants";
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
@@ -20,7 +10,7 @@ import Button from "../../ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceListItem from "./components/DeviceListItem";
 import { useTheme } from "@mui/material/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ControlPanel from "./components/ControlPanel";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
@@ -44,7 +34,7 @@ function Devices() {
 
   const handleSortChange = (event) => {
     const { value } = event.target;
-    const [sortBy, sortOrder] = value.split("-"); // Split value into sortBy and sortOrder
+    const [sortBy, sortOrder] = value.split("-");
     setSortCriteria({ sortBy, sortOrder });
   };
 
@@ -160,85 +150,15 @@ function Devices() {
           flexDirection: "column",
         }}
       >
-        <Box
-          item
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-          }}
-        >
-          <TextField
-            placeholder="Search"
-            variant="outlined"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    style={{ fontSize: "14px", color: "#88859E" }}
-                  />
-                </InputAdornment>
-              ),
-            }}
-            sx={{
-              marginRight: "8px",
-              color: "#88859E",
-              "& .MuiOutlinedInput-input": {
-                height: "5px",
-              },
-            }}
-          />
+        <ControlPanel
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          filters={filters}
+          handleFilterChange={handleFilterChange}
+          sortCriteria={sortCriteria}
+          handleSortChange={handleSortChange}
+        />
 
-          <FormControl sx={{ minWidth: 120, marginRight: "8px" }}>
-            <Select
-              labelId="demo-multiple-select-label"
-              id="demo-multiple-select"
-              multiple
-              value={filters.type}
-              onChange={(e) => handleFilterChange("type", e.target.value)}
-              renderValue={(selected) =>
-                selected.includes(OS.ALL)
-                  ? "Device Type: All"
-                  : `Device Type: ${selected.join(", ")}`
-              }
-              sx={{ height: "38px", fontSize: "14px" }}
-            >
-              {Object.values(OS).map((os) => (
-                <MenuItem
-                  onChange={(e) => handleFilterChange("type", e.target.value)}
-                  key={os}
-                  value={os}
-                  sx={{ fontSize: "14px" }}
-                >
-                  {os}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ minWidth: 120, marginRight: "8px" }}>
-            <Select
-              value={`${sortCriteria.sortBy}-${sortCriteria.sortOrder}`}
-              onChange={handleSortChange}
-              name="sortBy"
-              sx={{ height: "38px", fontSize: "14px" }}
-            >
-              <MenuItem value="name-asc" sx={{ fontSize: "14px" }}>
-                Name (Ascending)
-              </MenuItem>
-              <MenuItem value="name-desc" sx={{ fontSize: "14px" }}>
-                Name (Descending)
-              </MenuItem>
-              <MenuItem value="capacity-asc" sx={{ fontSize: "14px" }}>
-                Capacity (Ascending)
-              </MenuItem>
-              <MenuItem value="capacity-desc" sx={{ fontSize: "14px" }}>
-                Capacity (Descending)
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
         <Box
           item
           sx={{
