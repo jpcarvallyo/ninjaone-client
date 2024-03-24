@@ -106,7 +106,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         >
           {({ errors, touched, handleChange, values, isValid }) => (
             <Form>
-              <div>
+              <Box>
                 <InputLabel htmlFor={"name"} text={"Name"} required={true} />
                 <Field
                   id="name"
@@ -119,8 +119,8 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   helperText={touched.name && errors.name}
                   onChange={handleChange}
                 />
-              </div>
-              <div>
+              </Box>
+              <Box>
                 <InputLabel
                   htmlFor={"deviceType"}
                   text={"Device type"}
@@ -146,8 +146,8 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                 {touched.deviceType && errors.deviceType && (
                   <div>{errors.deviceType}</div>
                 )}
-              </div>
-              <div>
+              </Box>
+              <Box>
                 <InputLabel
                   htmlFor={"hddCapacity"}
                   text={"HDD capacity (GB)"}
@@ -164,13 +164,14 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   helperText={touched.hddCapacity && errors.hddCapacity}
                   onChange={handleChange}
                 />
-              </div>
+              </Box>
 
               <DialogActions>
                 <Button
                   onClick={handleClose}
                   text={"Close"}
                   variant={"secondary"}
+                  data-testid="close-btn"
                 />
                 <Button
                   type="submit"
