@@ -1,6 +1,6 @@
 import { AppBar, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { ReactComponent as HomeLogo } from "../../assets/logos/NinjaOneLogo.svg";
+import { ReactComponent as HomeLogo } from "assets/logos/NinjaOneLogo.svg";
 
 export default function NavBar() {
   const theme = useTheme();

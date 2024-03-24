@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { ThemeProvider } from "@mui/material/styles";
 import { UpsertDialog } from "./index";
-import theme from "../../../../config/theme";
+import theme from "config/theme";
 
 describe("UpsertDialog", () => {
   test("renders dialog with correct title when id is empty", () => {
@@ -20,8 +20,6 @@ describe("UpsertDialog", () => {
     const handleClose = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        {" "}
-        {/* Wrap component with ThemeProvider */}
         <UpsertDialog open={true} handleClose={handleClose} id="123" />
       </ThemeProvider>
     );
@@ -32,8 +30,6 @@ describe("UpsertDialog", () => {
     const handleClose = jest.fn();
     render(
       <ThemeProvider theme={theme}>
-        {" "}
-        {/* Wrap component with ThemeProvider */}
         <UpsertDialog open={true} handleClose={handleClose} id="" />
       </ThemeProvider>
     );

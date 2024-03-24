@@ -10,8 +10,8 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { ReactComponent as RefreshLogo } from "../../../../assets/icons/Refresh.svg";
-import { OS } from "../../../../utils/constants/osConstants";
+import { ReactComponent as RefreshLogo } from "assets/icons/Refresh.svg";
+import { OS } from "utils/constants/osConstants";
 import DevicePageContext from "../../DeviceContext";
 
 const ControlPanel = () => {

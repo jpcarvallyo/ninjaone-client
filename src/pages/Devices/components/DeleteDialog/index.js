@@ -11,9 +11,9 @@ import {
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import Button from "../../../../ui-kit/Button";
-import useGetDevice from "../../../../api/devices/queries/useGetDevice";
-import useDeleteDeviceData from "../../../../api/devices/mutations/useDeleteDevice";
+import Button from "ui-kit/Button";
+import useGetDevice from "api/devices/queries/useGetDevice";
+import useDeleteDeviceData from "api/devices/mutations/useDeleteDevice";
 
 export const DeleteDialog = ({ open, handleClose, id }) => {
   const { data, loading } = useGetDevice(id);

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
-import { OS } from "../../utils/constants/osConstants";
-import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
+import { OS } from "utils/constants/osConstants";
+import useGetDeviceList from "api/devices/queries/useGetDeviceList";
 const DevicePageContext = createContext();
 
 export const DevicePageProvider = ({ children }) => {

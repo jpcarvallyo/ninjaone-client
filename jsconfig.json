@@ -1,5 +1,16 @@
 {
   "jest": {
     "testEnvironment": "jsdom"
+  },
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@api/*": ["api/*"],
+      "@ui-kit/*": ["ui-kit/*"],
+      "@assets/*": ["assets/*"],
+      "@config/*": ["config/*"]
+    }
   }
 }

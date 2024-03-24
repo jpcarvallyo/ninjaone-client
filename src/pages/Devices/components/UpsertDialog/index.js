@@ -17,11 +17,11 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { validationSchema } from "./validationSchema";
 import { useTheme } from "@mui/material/styles";
 import { InputLabel } from "./InputLabel";
-import Button from "../../../../ui-kit/Button";
-import { OS } from "../../../../utils/";
-import useCreateDevice from "../../../../api/devices/mutations/useCreateDevice";
-import useUpdateDevice from "../../../../api/devices/mutations/useUpdateDevice";
-import { getDevice } from "../../../../api/devices/fetchers/getDevice";
+import Button from "ui-kit/Button";
+import { OS } from "utils/";
+import useCreateDevice from "api/devices/mutations/useCreateDevice";
+import useUpdateDevice from "api/devices/mutations/useUpdateDevice";
+import { getDevice } from "api/devices/fetchers/getDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
   const [deviceData, setDeviceData] = useState(null);

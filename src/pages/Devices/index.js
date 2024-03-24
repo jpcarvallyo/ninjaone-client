@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { Grid, Typography, Box } from "@mui/material";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { UpsertDialog } from "./components/UpsertDialog";
-import NavBar from "../../ui-kit/NavBar";
-import Button from "../../ui-kit/Button";
+import NavBar from "ui-kit/NavBar";
+import Button from "ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceList from "./components/DeviceList";
 import ControlPanel from "./components/ControlPanel";
-import ErrorBoundary from "../../ui-kit/ErrorBoundary";
+import ErrorBoundary from "ui-kit/ErrorBoundary";
 import DevicePageContext from "./DeviceContext";
 
 function Devices() {
