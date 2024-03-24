@@ -5,10 +5,13 @@ const resources = {
   en: {
     translation: {
       devices: "Devices",
+      hddCapacity: "HDD capacity (GB)",
       edit: "Edit",
       addDevice: "Add device",
       editDevice: "Edit device",
       cancel: "Cancel",
+      close: "Close",
+      submit: "Submit",
       delete: {
         string: "Delete",
         device: "Delete device",
@@ -27,9 +30,12 @@ const resources = {
   es: {
     translation: {
       devices: "Dispositivos",
+      hddCapacity: "Capacidad del disco duro (GB)",
       addDevice: "Añadir dispositivo",
       editDevice: "editar dispositivo",
+      close: "Cerca",
       cancel: "Cancelar",
+      submit: "Submit",
       delete: {
         string: "Borrar",
         device: "Eliminar dispositivo",

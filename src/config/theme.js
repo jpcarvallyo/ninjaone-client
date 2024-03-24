@@ -20,6 +20,7 @@ const theme = createTheme({
     },
     red: {
       main: "#D53948",
+      secondary: "#d32f2f",
     },
     grey: {
       main: "#48446940",
@@ -39,6 +40,13 @@ const theme = createTheme({
     },
     listMenuItem: {
       fontSize: "14px",
+    },
+    inputError: {
+      fontWeight: 400,
+      fontSize: "12px",
+      lineHeight: 1.66,
+      textAlign: "left",
+      margin: "3px 14px 6px 14px",
     },
     listHeading: {
       fontSize: "14px",

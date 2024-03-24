@@ -7,6 +7,7 @@ import {
   DialogTitle,
   TextField,
   Box,
+  Typography,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { Formik, Form, Field } from "formik";
@@ -14,6 +15,7 @@ import { MenuItem, Select } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { validationSchema } from "./validationSchema";
+import { useTheme } from "@mui/material/styles";
 import { InputLabel } from "./InputLabel";
 import Button from "../../../../ui-kit/Button";
 import { OS } from "../../../../utils/";
@@ -23,7 +25,7 @@ import { getDevice } from "../../../../api/devices/fetchers/getDevice";
 
 export const UpsertDialog = ({ open, handleClose, id }) => {
   const [deviceData, setDeviceData] = useState(null);
-
+  const theme = useTheme();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +83,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
           alignItems: "center",
         }}
       >
-        <DialogTitle>
+        <DialogTitle sx={{ fontSize: "24px" }}>
           {id === "" ? t("addDevice") : t("editDevice")}
         </DialogTitle>
         <FontAwesomeIcon
@@ -97,7 +99,12 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         />
       </Box>
 
-      <DialogContent>
+      <DialogContent
+        sx={{
+          width: "450px",
+          paddingTop: "5px",
+        }}
+      >
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -106,8 +113,12 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         >
           {({ errors, touched, handleChange, values, isValid }) => (
             <Form>
-              <Box>
-                <InputLabel htmlFor={"name"} text={"Name"} required={true} />
+              <Box sx={{ marginBottom: "10px" }}>
+                <InputLabel
+                  htmlFor={"name"}
+                  text={"System name"}
+                  required={true}
+                />
                 <Field
                   id="name"
                   name="name"
@@ -118,9 +129,10 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   error={touched.name && !!errors.name}
                   helperText={touched.name && errors.name}
                   onChange={handleChange}
+                  sx={{ marginTop: "6px" }}
                 />
               </Box>
-              <Box>
+              <Box sx={{ marginBottom: "10px" }}>
                 <InputLabel
                   htmlFor={"deviceType"}
                   text={"Device type"}
@@ -136,21 +148,35 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   error={touched.deviceType && !!errors.deviceType}
                   onChange={handleChange}
                   value={values.deviceType}
+                  sx={{
+                    marginTop: "6px",
+                    height: "38px",
+                    marginBottom: "8px",
+                  }}
                 >
-                  {osOptions.map((os) => (
-                    <MenuItem key={os} value={os}>
-                      {os}
-                    </MenuItem>
-                  ))}
+                  {osOptions
+                    .filter((os) => os !== "All")
+                    .map((os) => (
+                      <MenuItem key={os} value={os}>
+                        {os}
+                      </MenuItem>
+                    ))}
                 </Field>
                 {touched.deviceType && errors.deviceType && (
-                  <div>{errors.deviceType}</div>
+                  <Typography
+                    sx={{
+                      typography: "inputError",
+                      color: theme.palette.red.secondary,
+                    }}
+                  >
+                    {errors.deviceType}
+                  </Typography>
                 )}
               </Box>
-              <Box>
+              <Box sx={{ marginBottom: "10px" }}>
                 <InputLabel
                   htmlFor={"hddCapacity"}
-                  text={"HDD capacity (GB)"}
+                  text={t("hddCapacity")}
                   required={true}
                 />
                 <Field
@@ -163,13 +189,14 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   error={touched.hddCapacity && !!errors.hddCapacity}
                   helperText={touched.hddCapacity && errors.hddCapacity}
                   onChange={handleChange}
+                  sx={{ marginTop: "6px" }}
                 />
               </Box>
 
-              <DialogActions>
+              <DialogActions sx={{ position: "relative", right: "-8px" }}>
                 <Button
                   onClick={handleClose}
-                  text={"Close"}
+                  text={t("close")}
                   variant={"secondary"}
                   data-testid="close-btn"
                 />
@@ -180,7 +207,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   variant={"primary"}
                   disabled={!isValid}
                 >
-                  Submit
+                  {t("submit")}
                 </Button>
               </DialogActions>
             </Form>

@@ -121,55 +121,56 @@ function Devices() {
   return (
     <Grid container>
       <NavBar />
-      <Grid
-        item
-        xs={12}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "24px",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h1">{t("devices")}</Typography>
-        <Button
-          icon={faPlus}
-          text={t("addDevice")}
-          variant={"primary"}
-          onClick={addDeviceButtonHandler}
-        />
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "16px",
-          flexDirection: "column",
-        }}
-      >
-        <ControlPanel
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-          sortCriteria={sortCriteria}
-          handleSortChange={handleSortChange}
-        />
-
-        <Box
+      <ErrorBoundary>
+        <Grid
           item
+          xs={12}
           sx={{
-            marginLeft: "16px",
-            marginTop: "20px",
-            marginBottom: "8px",
-            typography: "listHeading",
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "24px",
+            alignItems: "center",
           }}
         >
-          <Typography>{t("devices")}</Typography>
-        </Box>
-        <ErrorBoundary>
+          <Typography variant="h1">{t("devices")}</Typography>
+          <Button
+            icon={faPlus}
+            text={t("addDevice")}
+            variant={"primary"}
+            onClick={addDeviceButtonHandler}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "16px",
+            flexDirection: "column",
+          }}
+        >
+          <ControlPanel
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+            sortCriteria={sortCriteria}
+            handleSortChange={handleSortChange}
+          />
+
+          <Box
+            item
+            sx={{
+              marginLeft: "16px",
+              marginTop: "20px",
+              marginBottom: "8px",
+              typography: "listHeading",
+            }}
+          >
+            <Typography>{t("devices")}</Typography>
+          </Box>
+
           {loading ? (
             <List>
               {[1, 2, 3, 4, 5, 6, 7].map((index) => (
@@ -193,18 +194,18 @@ function Devices() {
               ))}
             </List>
           )}
-        </ErrorBoundary>
-      </Grid>
-      <UpsertDialog
-        open={upsertDialogOpen}
-        handleClose={handleUpsertDialogClose}
-        id={selectedDeviceId}
-      />
-      <DeleteDialog
-        open={deleteDialogOpen}
-        handleClose={handleDeleteDialogClose}
-        id={selectedDeviceId}
-      />
+        </Grid>
+        <UpsertDialog
+          open={upsertDialogOpen}
+          handleClose={handleUpsertDialogClose}
+          id={selectedDeviceId}
+        />
+        <DeleteDialog
+          open={deleteDialogOpen}
+          handleClose={handleDeleteDialogClose}
+          id={selectedDeviceId}
+        />
+      </ErrorBoundary>
     </Grid>
   );
 }
