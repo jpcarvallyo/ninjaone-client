@@ -14,7 +14,7 @@ export default function NavBar() {
         borderBottom: "1px solid #E8E8EA",
       }}
     >
-      <Toolbar sx={{ marginLeft: "8px" }}>
+      <Toolbar sx={{ marginLeft: "4px" }}>
         <HomeLogo />
       </Toolbar>
     </AppBar>

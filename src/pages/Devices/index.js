@@ -77,6 +77,15 @@ function Devices() {
     setFilters({ ...filters, [filterName]: updatedValue });
   };
 
+  const handleOnClickReset = () => {
+    setSortCriteria({
+      sortBy: "name",
+      sortOrder: "asc",
+    });
+    setFilters({ type: [OS.ALL], capacity: "" });
+    setSearchTerm("");
+  };
+
   const sortedAndFilteredDeviceList = useMemo(() => {
     let filteredList = deviceList ? [...deviceList] : [];
 
@@ -157,6 +166,7 @@ function Devices() {
             handleFilterChange={handleFilterChange}
             sortCriteria={sortCriteria}
             handleSortChange={handleSortChange}
+            handleOnClickReset={handleOnClickReset}
           />
 
           <Box
