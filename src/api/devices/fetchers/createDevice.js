@@ -1,13 +1,11 @@
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_BASE_URL;
 
 export const createDevice = async (payload) => {
   try {
-    const response = await axios.post("http://localhost:3000/devices", payload);
-    // Handle successful response
+    const response = await axios.post(`${apiUrl}/devices`, payload);
     return response.data;
   } catch (error) {
-    // Handle error
-    console.error("Error:", error);
-    throw error; // Rethrow the error
+    throw error;
   }
 };

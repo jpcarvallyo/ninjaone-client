@@ -1,16 +1,13 @@
 import axios from "axios";
+const apiUrl = process.env.REACT_APP_BASE_URL;
 
 export const updateDevice = (id, payload) => {
   return axios
-    .put(`http://localhost:3000/devices/${id}`, payload)
+    .put(`${apiUrl}/devices/${id}`, payload)
     .then((response) => {
-      // Handle successful response
-      console.log("Response:", response.data);
-      return response.data; // Return the data from the response
+      return response.data;
     })
     .catch((error) => {
-      // Handle error
-      console.error("Error:", error);
-      throw error; // Rethrow the error to propagate it to the caller
+      throw error;
     });
 };
