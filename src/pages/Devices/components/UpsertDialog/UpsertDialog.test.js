@@ -1,9 +1,9 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect"; // Make sure to include this import
-import { ThemeProvider } from "@mui/material/styles"; // Import ThemeProvider
+import "@testing-library/jest-dom/extend-expect";
+import { ThemeProvider } from "@mui/material/styles";
 import { UpsertDialog } from "./index";
-import theme from "../../../../config/theme"; // Import your theme
+import theme from "../../../../config/theme";
 
 describe("UpsertDialog", () => {
   test("renders dialog with correct title when id is empty", () => {
@@ -13,7 +13,7 @@ describe("UpsertDialog", () => {
         <UpsertDialog open={true} handleClose={handleClose} id="" />
       </ThemeProvider>
     );
-    expect(screen.getByText(/Add Device/i)).toBeInTheDocument(); // Using RegExp matcher
+    expect(screen.getByText(/Add Device/i)).toBeInTheDocument();
   });
 
   test("renders dialog with correct title when id is not empty", () => {

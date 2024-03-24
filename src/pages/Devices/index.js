@@ -9,9 +9,6 @@ import {
   MenuItem,
   TextField,
   List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   InputAdornment,
 } from "@mui/material";
 import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -21,8 +18,7 @@ import { UpsertDialog } from "./components/UpsertDialog";
 import NavBar from "../../ui-kit/NavBar";
 import Button from "../../ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
-import DeviceLogo from "./components/DeviceLogo";
-import EditDeleteMenu from "./components/EditDeleteMenu.js";
+import DeviceListItem from "./components/DeviceListItem";
 import { useTheme } from "@mui/material/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -80,7 +76,6 @@ function Devices() {
 
   const handleFilterChange = (filterName, value) => {
     let updatedValue = value;
-    console.log("🚀 ~ handleFilterChange ~ updatedValue:", updatedValue);
 
     if (value.includes(OS.ALL) && value.length > 1) {
       // If "All" option is selected along with other options, remove "All" option
@@ -264,45 +259,11 @@ function Devices() {
           }}
         >
           {sortedAndFilteredDeviceList.map((device) => (
-            <ListItem
+            <DeviceListItem
               key={device.id}
-              sx={{
-                paddingTop: "12px",
-                borderBottom: "1px solid #E7E8EB",
-                height: "52px",
-                "&:hover": {
-                  bgcolor: theme.palette.grey.contrast,
-                },
-              }}
-            >
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <DeviceLogo system={device.type} />
-                  <ListItemText
-                    sx={{ marginLeft: "5px" }}
-                    primary={
-                      <Typography sx={{ typography: "deviceListItemPrimary" }}>
-                        {device.system_name}
-                      </Typography>
-                    }
-                  />
-                </Box>
-                <ListItemText
-                  secondary={
-                    <Typography sx={{ typography: "deviceListItemSecondary" }}>
-                      {`${device.type} workstation - ${device.hdd_capacity} GB`}
-                    </Typography>
-                  }
-                />
-              </Box>
-
-              <ListItemSecondaryAction>
-                <EditDeleteMenu
-                  itemId={device.id}
-                  handleDeviceItemClick={handleDeviceItemClick}
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
+              device={device}
+              handleDeviceItemClick={handleDeviceItemClick}
+            />
           ))}
         </List>
       </Grid>
