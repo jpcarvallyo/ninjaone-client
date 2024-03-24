@@ -32,6 +32,22 @@ const theme = createTheme({
       fontSize: "14px",
       textTransform: "none",
     },
+    listHeading: {
+      fontSize: "14px",
+      fontWeight: 500,
+      lineHeight: "16.94px",
+    },
+    deviceListItemPrimary: {
+      fontWeight: 500,
+      fontSize: "14px",
+      lineHeight: "16.94px",
+      textTransform: "uppercase",
+    },
+    deviceListItemSecondary: {
+      fontWeight: 400,
+      fontSize: "12px",
+      lineHeight: "14.52px",
+    },
     formInputLabel: {
       fontSize: "14px",
       fontWeight: 400,

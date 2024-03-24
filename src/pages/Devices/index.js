@@ -5,28 +5,23 @@ import {
   Typography,
   Box,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
-  Switch,
-  FormGroup,
-  FormControlLabel,
   TextField,
   List,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  IconButton,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { faPlus, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { OS } from "../../utils/constants/osConstants";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
 import NavBar from "../../ui-kit/NavBar";
 import Button from "../../ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
+import DeviceLogo from "./components/DeviceLogo";
+import EditDeleteMenu from "./components/EditDeleteMenu.js";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
@@ -36,14 +31,7 @@ function Devices() {
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
   const { t } = useTranslation();
-  const theme = useTheme();
   const { deviceList, loading } = useGetDeviceList(refreshList);
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
-  const handleOptionChange = (event) => {
-    setSelectedOptions(event.target.value);
-  };
 
   useEffect(() => {
     // Reset the refreshList state after refetching the list
@@ -76,12 +64,21 @@ function Devices() {
     }
   };
 
-  // Function to handle filter change
   const handleFilterChange = (filterName, value) => {
-    setFilters({ ...filters, [filterName]: value });
+    let updatedValue = value;
+    console.log("🚀 ~ handleFilterChange ~ updatedValue:", updatedValue);
+
+    if (value.includes(OS.ALL) && value.length > 1) {
+      // If "All" option is selected along with other options, remove "All" option
+      updatedValue = value.filter((option) => option !== OS.ALL);
+    } else if (value.length === 0) {
+      // If all options are deselected, set the filter to only "All"
+      updatedValue = [OS.ALL];
+    }
+
+    setFilters({ ...filters, [filterName]: updatedValue });
   };
 
-  // Filter the device list based on filters and search term
   // Filter the device list based on filters and search term
   const filteredDeviceList = useMemo(() => {
     let filteredList = deviceList || []; // Handle null deviceList
@@ -138,11 +135,11 @@ function Devices() {
           display: "flex",
           justifyContent: "space-between",
           padding: "24px",
-          // alignItems: "center",
           flexDirection: "column",
         }}
       >
-        <Box
+        <Grid
+          item
           sx={{
             display: "flex",
             paddingLeft: "16px",
@@ -150,11 +147,18 @@ function Devices() {
           }}
         >
           <TextField
-            label="Search"
+            // label="Search"
+            placeholder="Search"
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{
+              "& .MuiOutlinedInput-input": {
+                height: "5px",
+              },
+            }}
           />
+
           <FormControl sx={{ minWidth: 120 }}>
             <Select
               labelId="demo-multiple-select-label"
@@ -167,39 +171,60 @@ function Devices() {
                   ? "Device Type: All"
                   : `Device Type: ${selected.join(", ")}`
               }
+              sx={{ height: "38px" }}
             >
               {Object.values(OS).map((os) => (
-                <MenuItem key={os} value={os}>
+                <MenuItem
+                  onChange={(e) => handleFilterChange("type", e.target.value)}
+                  key={os}
+                  value={os}
+                >
                   {os}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-        </Box>
+        </Grid>
+        <Grid
+          item
+          sx={{
+            marginLeft: "16px",
+            marginTop: "20px",
+            typography: "listHeading",
+          }}
+        >
+          <Typography>{t("devices")}</Typography>
+        </Grid>
 
-        {/* Display filtered device list */}
         <List sx={{ width: "100%" }}>
           {filteredDeviceList.map((device) => (
             <ListItem key={device.id}>
-              <ListItemText
-                primary={device.system_name}
-                secondary={`${device.type} workstation - ${device.hdd_capacity} GB`}
-              />
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DeviceLogo system={device.type} />
+                  <ListItemText
+                    sx={{ marginLeft: "5px" }}
+                    primary={
+                      <Typography sx={{ typography: "deviceListItemPrimary" }}>
+                        {device.system_name}
+                      </Typography>
+                    }
+                  />
+                </Box>
+                <ListItemText
+                  secondary={
+                    <Typography sx={{ typography: "deviceListItemSecondary" }}>
+                      {`${device.type} workstation - ${device.hdd_capacity} GB`}
+                    </Typography>
+                  }
+                />
+              </Box>
+
               <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  onClick={() => handleDeviceItemClick(device.id, "edit")}
-                >
-                  <FontAwesomeIcon icon={faEdit} />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => handleDeviceItemClick(device.id, "delete")}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </IconButton>
+                <EditDeleteMenu
+                  itemId={device.id}
+                  handleDeviceItemClick={handleDeviceItemClick}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

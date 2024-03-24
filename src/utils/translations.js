@@ -5,6 +5,7 @@ const resources = {
   en: {
     translation: {
       devices: "Devices",
+      edit: "Edit",
       addDevice: "Add device",
       editDevice: "Edit device",
       cancel: "Cancel",
