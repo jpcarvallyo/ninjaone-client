@@ -39,17 +39,18 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
     }
   }, [id]);
 
-  const initialValues = deviceData
-    ? {
-        name: deviceData.system_name,
-        deviceType: deviceData.type,
-        hddCapacity: deviceData.hdd_capacity,
-      }
-    : {
-        name: "",
-        deviceType: "",
-        hddCapacity: "",
-      };
+  const initialValues =
+    deviceData && id !== ""
+      ? {
+          name: deviceData.system_name,
+          deviceType: deviceData.type,
+          hddCapacity: deviceData.hdd_capacity,
+        }
+      : {
+          name: "",
+          deviceType: "",
+          hddCapacity: "",
+        };
 
   const { postData } = useCreateDevice();
   const { updateDeviceData } = useUpdateDevice();

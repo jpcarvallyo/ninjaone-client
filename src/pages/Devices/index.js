@@ -31,7 +31,6 @@ function Devices() {
   const [refreshList, setRefreshList] = useState(false);
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
-  const [hoveredItem, setHoveredItem] = useState(null);
   const [sortCriteria, setSortCriteria] = useState({
     sortBy: "name",
     sortOrder: "asc",
@@ -49,14 +48,6 @@ function Devices() {
     const { value } = event.target;
     const [sortBy, sortOrder] = value.split("-"); // Split value into sortBy and sortOrder
     setSortCriteria({ sortBy, sortOrder });
-  };
-
-  const handleListItemHover = (itemId) => {
-    setHoveredItem(itemId);
-  };
-
-  const handleListItemLeave = () => {
-    setHoveredItem(null);
   };
 
   const addDeviceButtonHandler = () => {
@@ -253,16 +244,11 @@ function Devices() {
           {sortedAndFilteredDeviceList.map((device) => (
             <ListItem
               key={device.id}
-              onMouseEnter={() => handleListItemHover(device.id)}
-              onMouseLeave={handleListItemLeave}
               sx={{
                 borderBottom: "1px solid #E7E8EB",
                 height: "52px",
                 "&:hover": {
-                  bgcolor:
-                    hoveredItem === device.id
-                      ? theme.palette.grey.contrast
-                      : "transparent",
+                  bgcolor: theme.palette.grey.contrast,
                 },
               }}
             >
@@ -291,8 +277,6 @@ function Devices() {
                 <EditDeleteMenu
                   itemId={device.id}
                   handleDeviceItemClick={handleDeviceItemClick}
-                  handleListItemHover={() => handleListItemHover(device.id)}
-                  handleListItemLeave={handleListItemLeave}
                 />
               </ListItemSecondaryAction>
             </ListItem>
