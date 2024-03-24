@@ -44,10 +44,20 @@ function EditDeleteMenu({ itemId, handleDeviceItemClick }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleMenuItemClick(itemId, "edit")}>
+        <MenuItem
+          sx={{ width: "120px", fontSize: "14px" }}
+          onClick={() => handleMenuItemClick(itemId, "edit")}
+        >
           {t("edit")}
         </MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick(itemId, "delete")}>
+        <MenuItem
+          sx={{
+            width: "120px",
+            color: theme.palette.red.main,
+            fontSize: "14px",
+          }}
+          onClick={() => handleMenuItemClick(itemId, "delete")}
+        >
           {t("delete.string")}
         </MenuItem>
       </Menu>

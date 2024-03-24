@@ -18,6 +18,9 @@ const theme = createTheme({
     black: {
       secondary: "#211F33",
     },
+    red: {
+      main: "#D53948",
+    },
     grey: {
       main: "#48446940",
       secondary: "#48446940",
@@ -33,6 +36,9 @@ const theme = createTheme({
     button: {
       fontSize: "14px",
       textTransform: "none",
+    },
+    listMenuItem: {
+      fontSize: "14px",
     },
     listHeading: {
       fontSize: "14px",

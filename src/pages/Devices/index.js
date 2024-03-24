@@ -12,8 +12,9 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
+  InputAdornment,
 } from "@mui/material";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { OS } from "../../utils/constants/osConstants";
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
 import { UpsertDialog } from "./components/UpsertDialog";
@@ -23,6 +24,7 @@ import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceLogo from "./components/DeviceLogo";
 import EditDeleteMenu from "./components/EditDeleteMenu.js";
 import { useTheme } from "@mui/material/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Devices() {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
@@ -175,8 +177,19 @@ function Devices() {
             variant="outlined"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    style={{ fontSize: "14px", color: "#88859E" }}
+                  />
+                </InputAdornment>
+              ),
+            }}
             sx={{
               marginRight: "8px",
+              color: "#88859E",
               "& .MuiOutlinedInput-input": {
                 height: "5px",
               },
@@ -195,13 +208,14 @@ function Devices() {
                   ? "Device Type: All"
                   : `Device Type: ${selected.join(", ")}`
               }
-              sx={{ height: "38px" }}
+              sx={{ height: "38px", fontSize: "14px" }}
             >
               {Object.values(OS).map((os) => (
                 <MenuItem
                   onChange={(e) => handleFilterChange("type", e.target.value)}
                   key={os}
                   value={os}
+                  sx={{ fontSize: "14px" }}
                 >
                   {os}
                 </MenuItem>
@@ -213,12 +227,20 @@ function Devices() {
               value={`${sortCriteria.sortBy}-${sortCriteria.sortOrder}`}
               onChange={handleSortChange}
               name="sortBy"
-              sx={{ height: "38px" }}
+              sx={{ height: "38px", fontSize: "14px" }}
             >
-              <MenuItem value="name-asc">Name (Ascending)</MenuItem>
-              <MenuItem value="name-desc">Name (Descending)</MenuItem>
-              <MenuItem value="capacity-asc">Capacity (Ascending)</MenuItem>
-              <MenuItem value="capacity-desc">Capacity (Descending)</MenuItem>
+              <MenuItem value="name-asc" sx={{ fontSize: "14px" }}>
+                Name (Ascending)
+              </MenuItem>
+              <MenuItem value="name-desc" sx={{ fontSize: "14px" }}>
+                Name (Descending)
+              </MenuItem>
+              <MenuItem value="capacity-asc" sx={{ fontSize: "14px" }}>
+                Capacity (Ascending)
+              </MenuItem>
+              <MenuItem value="capacity-desc" sx={{ fontSize: "14px" }}>
+                Capacity (Descending)
+              </MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -245,6 +267,7 @@ function Devices() {
             <ListItem
               key={device.id}
               sx={{
+                paddingTop: "12px",
                 borderBottom: "1px solid #E7E8EB",
                 height: "52px",
                 "&:hover": {
