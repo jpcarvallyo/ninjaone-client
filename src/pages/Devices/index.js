@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid, Typography, Box, List } from "@mui/material";
+import { Grid, Typography, Box, List, Skeleton } from "@mui/material";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { OS } from "../../utils/constants/osConstants";
 import useGetDeviceList from "../../api/devices/queries/useGetDeviceList";
@@ -9,7 +9,6 @@ import NavBar from "../../ui-kit/NavBar";
 import Button from "../../ui-kit/Button";
 import { DeleteDialog } from "./components/DeleteDialog";
 import DeviceListItem from "./components/DeviceListItem";
-import { useTheme } from "@mui/material/styles";
 import ControlPanel from "./components/ControlPanel";
 import ErrorBoundary from "../../ui-kit/ErrorBoundary";
 
@@ -26,7 +25,6 @@ function Devices() {
   });
 
   const { t } = useTranslation();
-  const theme = useTheme();
   const { deviceList, loading } = useGetDeviceList(refreshList);
 
   useEffect(() => {
@@ -172,21 +170,29 @@ function Devices() {
           <Typography>{t("devices")}</Typography>
         </Box>
         <ErrorBoundary>
-          <List
-            sx={{
-              width: "100%",
-              borderTop: "1px solid #CBCFD3",
-              paddingTop: "0",
-            }}
-          >
-            {sortedAndFilteredDeviceList.map((device) => (
-              <DeviceListItem
-                key={device.id}
-                device={device}
-                handleDeviceItemClick={handleDeviceItemClick}
-              />
-            ))}
-          </List>
+          {loading ? (
+            <List>
+              {[1, 2, 3, 4, 5, 6, 7].map((index) => (
+                <Skeleton key={index} variant="text" height={52} />
+              ))}
+            </List>
+          ) : (
+            <List
+              sx={{
+                width: "100%",
+                borderTop: "1px solid #CBCFD3",
+                paddingTop: "0",
+              }}
+            >
+              {sortedAndFilteredDeviceList.map((device) => (
+                <DeviceListItem
+                  key={device.id}
+                  device={device}
+                  handleDeviceItemClick={handleDeviceItemClick}
+                />
+              ))}
+            </List>
+          )}
         </ErrorBoundary>
       </Grid>
       <UpsertDialog
