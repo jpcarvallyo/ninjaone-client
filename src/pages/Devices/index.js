@@ -32,6 +32,10 @@ function Devices() {
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState({
+    sortBy: "name",
+    sortOrder: "asc",
+  });
 
   const { t } = useTranslation();
   const theme = useTheme();
@@ -40,6 +44,12 @@ function Devices() {
   useEffect(() => {
     setRefreshList(false);
   }, [deviceList]);
+
+  const handleSortChange = (event) => {
+    const { value } = event.target;
+    const [sortBy, sortOrder] = value.split("-"); // Split value into sortBy and sortOrder
+    setSortCriteria({ sortBy, sortOrder });
+  };
 
   const handleListItemHover = (itemId) => {
     setHoveredItem(itemId);
@@ -90,9 +100,8 @@ function Devices() {
     setFilters({ ...filters, [filterName]: updatedValue });
   };
 
-  // Filter the device list based on filters and search term
-  const filteredDeviceList = useMemo(() => {
-    let filteredList = deviceList || []; // Handle null deviceList
+  const sortedAndFilteredDeviceList = useMemo(() => {
+    let filteredList = deviceList ? [...deviceList] : [];
 
     // Filter by type if not "All"
     if (!filters.type.includes(OS.ALL)) {
@@ -115,8 +124,22 @@ function Devices() {
       );
     }
 
+    // Sorting logic
+    filteredList.sort((a, b) => {
+      if (sortCriteria.sortBy === "name") {
+        return sortCriteria.sortOrder === "asc"
+          ? a.system_name.localeCompare(b.system_name)
+          : b.system_name.localeCompare(a.system_name);
+      } else if (sortCriteria.sortBy === "capacity") {
+        return sortCriteria.sortOrder === "asc"
+          ? a.hdd_capacity - b.hdd_capacity
+          : b.hdd_capacity - a.hdd_capacity;
+      }
+      return 0;
+    });
+
     return filteredList;
-  }, [deviceList, filters, searchTerm]);
+  }, [deviceList, filters, searchTerm, sortCriteria]);
 
   return (
     <Grid container>
@@ -169,7 +192,7 @@ function Devices() {
             }}
           />
 
-          <FormControl sx={{ minWidth: 120 }}>
+          <FormControl sx={{ minWidth: 120, marginRight: "8px" }}>
             <Select
               labelId="demo-multiple-select-label"
               id="demo-multiple-select"
@@ -194,6 +217,19 @@ function Devices() {
               ))}
             </Select>
           </FormControl>
+          <FormControl sx={{ minWidth: 120, marginRight: "8px" }}>
+            <Select
+              value={`${sortCriteria.sortBy}-${sortCriteria.sortOrder}`}
+              onChange={handleSortChange}
+              name="sortBy"
+              sx={{ height: "38px" }}
+            >
+              <MenuItem value="name-asc">Name (Ascending)</MenuItem>
+              <MenuItem value="name-desc">Name (Descending)</MenuItem>
+              <MenuItem value="capacity-asc">Capacity (Ascending)</MenuItem>
+              <MenuItem value="capacity-desc">Capacity (Descending)</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Box
           item
@@ -214,7 +250,7 @@ function Devices() {
             paddingTop: "0",
           }}
         >
-          {filteredDeviceList.map((device) => (
+          {sortedAndFilteredDeviceList.map((device) => (
             <ListItem
               key={device.id}
               onMouseEnter={() => handleListItemHover(device.id)}
