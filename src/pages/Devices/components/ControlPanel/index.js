@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   TextField,
@@ -12,16 +12,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as RefreshLogo } from "../../../../assets/icons/Refresh.svg";
 import { OS } from "../../../../utils/constants/osConstants";
+import DevicePageContext from "../../DeviceContext";
 
-const ControlPanel = ({
-  searchTerm,
-  setSearchTerm,
-  filters,
-  handleFilterChange,
-  sortCriteria,
-  handleSortChange,
-  handleOnClickReset,
-}) => {
+const ControlPanel = () => {
+  const {
+    searchTerm,
+    setSearchTerm,
+    filters,
+    handleFilterChange,
+    sortCriteria,
+    handleSortChange,
+    handleOnClickReset,
+  } = useContext(DevicePageContext);
   return (
     <Box
       sx={{
