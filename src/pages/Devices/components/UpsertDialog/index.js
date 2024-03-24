@@ -129,7 +129,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   error={touched.name && !!errors.name}
                   helperText={touched.name && errors.name}
                   onChange={handleChange}
-                  sx={{ marginTop: "6px" }}
+                  sx={{ marginTop: "6px", fontSize: "14px" }}
                 />
               </Box>
               <Box sx={{ marginBottom: "10px" }}>
@@ -152,12 +152,13 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                     marginTop: "6px",
                     height: "38px",
                     marginBottom: "8px",
+                    fontSize: "14px",
                   }}
                 >
                   {osOptions
                     .filter((os) => os !== "All")
                     .map((os) => (
-                      <MenuItem key={os} value={os}>
+                      <MenuItem key={os} value={os} sx={{ fontSize: "14px" }}>
                         {os}
                       </MenuItem>
                     ))}
@@ -189,7 +190,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
                   error={touched.hddCapacity && !!errors.hddCapacity}
                   helperText={touched.hddCapacity && errors.hddCapacity}
                   onChange={handleChange}
-                  sx={{ marginTop: "6px" }}
+                  sx={{ marginTop: "6px", fontSize: "14px" }}
                 />
               </Box>
 
