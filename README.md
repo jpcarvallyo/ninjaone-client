@@ -15,6 +15,7 @@ Hello, my name is James Carvallyo. Here is my React developer showcase submissio
 - Laid foundation for Internationalizing the app through **translations** (English and Spanish found in the _translations.js_ file)
 - **Theming capabilities**
 - **Page routing**
+- **Form field Validation**
 - **Version Control**
 - **Error Boundary**
 - Recorded myself demoing the app [Loom recording](https://www.loom.com/share/2f1ea50270784089865c9af6cb7235c9?sid=4d51fbcd-6ac4-4002-95ec-71b7d2979039)
