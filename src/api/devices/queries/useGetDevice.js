@@ -20,6 +20,7 @@ const useGetDeviceData = (id) => {
 
   useEffect(() => {
     getDeviceData(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return { data, loading, error };
