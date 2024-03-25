@@ -16,7 +16,7 @@ import useGetDevice from "api/devices/queries/useGetDevice";
 import { useDeleteDeviceData } from "api/devices/mutations/";
 
 export const DeleteDialog = ({ open, handleClose, id }) => {
-  const { data, loading } = useGetDevice(id);
+  const { data } = useGetDevice(id);
   const { deleteDeviceData } = useDeleteDeviceData(id);
 
   const { t } = useTranslation();

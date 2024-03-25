@@ -43,6 +43,12 @@ function EditDeleteMenu({ itemId, handleDeviceItemClick }) {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        sx={{
+          "& .MuiPaper-root": {
+            border: "1px solid #48446940",
+            boxShadow: "0px 2px 4px 0px #211F3326",
+          },
+        }}
       >
         <MenuItem
           sx={{ width: "120px", fontSize: "14px" }}

@@ -13,6 +13,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as RefreshLogo } from "assets/icons/Refresh.svg";
 import { OS } from "utils/constants/osConstants";
 import DevicePageContext from "../../DeviceContext";
+import { useTranslation } from "react-i18next";
+import { capitalizeWords } from "utils/capitalizeWords";
 
 const ControlPanel = () => {
   const {
@@ -24,6 +26,8 @@ const ControlPanel = () => {
     handleSortChange,
     handleOnClickReset,
   } = useContext(DevicePageContext);
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -31,6 +35,7 @@ const ControlPanel = () => {
         justifyContent: "space-between",
         alignItems: "center",
       }}
+      id="control-panel"
     >
       <Box
         item
@@ -40,9 +45,10 @@ const ControlPanel = () => {
         }}
       >
         <TextField
-          placeholder="Search"
+          placeholder={t("search")}
           variant="outlined"
           value={searchTerm}
+          id="search-input"
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
             startAdornment: (
@@ -53,6 +59,9 @@ const ControlPanel = () => {
                 />
               </InputAdornment>
             ),
+          }}
+          InputLabelProps={{
+            style: { fontSize: "14px !important" },
           }}
           sx={{
             marginRight: "8px",
@@ -72,8 +81,8 @@ const ControlPanel = () => {
             onChange={(e) => handleFilterChange("type", e.target.value)}
             renderValue={(selected) =>
               selected.includes(OS.ALL)
-                ? "Device Type: All"
-                : `Device Type: ${selected.join(", ")}`
+                ? `${capitalizeWords(t("device.type"))}: ${t("all")}`
+                : `${capitalizeWords(t("device.type"))}: ${selected.join(", ")}`
             }
             sx={{ height: "38px", fontSize: "14px" }}
           >
@@ -97,23 +106,33 @@ const ControlPanel = () => {
             sx={{ height: "38px", fontSize: "14px" }}
           >
             <MenuItem value="name-asc" sx={{ fontSize: "14px" }}>
-              Sort By: Name (Ascending)
+              {`${t("sortBy.string")}: ${t("name")} (${t("sortBy.ascending")})`}
             </MenuItem>
             <MenuItem value="name-desc" sx={{ fontSize: "14px" }}>
-              Sort By: Name (Descending)
+              {`${t("sortBy.string")}: ${t("name")} (${t(
+                "sortBy.descending"
+              )})`}
             </MenuItem>
             <MenuItem value="capacity-asc" sx={{ fontSize: "14px" }}>
-              Sort By: HDD Capacity (Ascending)
+              {`${t("sortBy.string")}: ${t("sortBy.hddCapacity")} (${t(
+                "sortBy.ascending"
+              )})`}
             </MenuItem>
             <MenuItem value="capacity-desc" sx={{ fontSize: "14px" }}>
-              Sort By: HDD Capacity (Descending)
+              {`${t("sortBy.string")}: ${t("sortBy.hddCapacity")} (${t(
+                "sortBy.descending"
+              )})`}
             </MenuItem>
           </Select>
         </FormControl>
       </Box>
       <IconButton
         onClick={handleOnClickReset}
-        sx={{ "&:hover": { backgroundColor: "transparent" } }}
+        sx={{
+          position: "relative",
+          right: "-8px",
+          "&:hover": { backgroundColor: "transparent" },
+        }}
       >
         <RefreshLogo />
       </IconButton>

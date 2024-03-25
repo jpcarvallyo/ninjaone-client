@@ -27,6 +27,7 @@ const theme = createTheme({
       secondary: "#48446940",
       contrast: "#F4F4F5",
       iconButton: "#E8E8EA",
+      o3: "#6E6D7A",
     },
     warning: {
       main: "#D53948",

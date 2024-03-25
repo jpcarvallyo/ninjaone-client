@@ -40,7 +40,7 @@ function Devices() {
           <Typography variant="h1">{t("devices")}</Typography>
           <Button
             icon={faPlus}
-            text={t("addDevice")}
+            text={t("device.addDevice")}
             variant={"primary"}
             onClick={addDeviceButtonHandler}
           />
@@ -51,7 +51,7 @@ function Devices() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            padding: "16px",
+            padding: "0 24px",
             flexDirection: "column",
           }}
         >

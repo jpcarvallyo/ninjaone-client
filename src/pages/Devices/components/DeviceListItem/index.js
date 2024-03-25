@@ -9,6 +9,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import DeviceLogo from "../DeviceLogo";
 import EditDeleteMenu from "../EditDeleteMenu.js";
+import { capitalizeWords } from "utils/capitalizeWords";
 
 const DeviceListItem = ({ device, handleDeviceItemClick }) => {
   const theme = useTheme();
@@ -19,7 +20,7 @@ const DeviceListItem = ({ device, handleDeviceItemClick }) => {
       sx={{
         paddingTop: "12px",
         borderBottom: "1px solid #E7E8EB",
-        height: "52px",
+        height: "58px",
         "&:hover": {
           bgcolor: theme.palette.grey.contrast,
         },
@@ -40,9 +41,12 @@ const DeviceListItem = ({ device, handleDeviceItemClick }) => {
         <ListItemText
           secondary={
             <Typography sx={{ typography: "deviceListItemSecondary" }}>
-              {`${device.type} workstation - ${device.hdd_capacity} GB`}
+              {`${capitalizeWords(device.type)} workstation - ${
+                device.hdd_capacity
+              } GB`}
             </Typography>
           }
+          sx={{ color: theme.palette.grey.o3, marginTop: "0" }}
         />
       </Box>
 

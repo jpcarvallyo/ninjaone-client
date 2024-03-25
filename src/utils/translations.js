@@ -5,10 +5,23 @@ const resources = {
   en: {
     translation: {
       devices: "Devices",
-      hddCapacity: "HDD capacity (GB)",
       edit: "Edit",
-      addDevice: "Add device",
-      editDevice: "Edit device",
+      name: "Name",
+      search: "Search",
+      all: "All",
+      device: {
+        addDevice: "Add device",
+        editDevice: "Edit device",
+        systemName: "System name",
+        type: "Device type",
+        hddCapacity: "HDD capacity (GB)",
+      },
+      sortBy: {
+        string: "Sort By",
+        ascending: "Ascending",
+        descending: "Descending",
+        hddCapacity: "HDD Capacity",
+      },
       cancel: "Cancel",
       close: "Close",
       submit: "Submit",
@@ -30,11 +43,25 @@ const resources = {
   es: {
     translation: {
       devices: "Dispositivos",
-      hddCapacity: "Capacidad del disco duro (GB)",
-      addDevice: "Añadir dispositivo",
-      editDevice: "editar dispositivo",
-      close: "Cerca",
+      edit: "Editar",
+      name: "Name",
+      search: "Buscar",
+      all: "Todo",
+      device: {
+        addDevice: "Añadir dispositivo",
+        editDevice: "Editar dispositivo",
+        systemName: "Nombre del sistema",
+        type: "Tipo de dispositivo",
+        hddCapacity: "Capacidad del disco duro (GB)",
+      },
+      sortBy: {
+        string: "Sort ByOrdenar por",
+        ascending: "Ascendente",
+        descending: "Descendente",
+        hddCapacity: "Capacidad del disco duro",
+      },
       cancel: "Cancelar",
+      close: "Cerca",
       submit: "Submit",
       delete: {
         string: "Borrar",
@@ -43,7 +70,14 @@ const resources = {
         inform: "Esta acción no se puede deshacer",
       },
       toast: {
+        createError: "La creación del dispositivo no fue exitosa",
+        createSuccess:
+          "Device was successfully createEl dispositivo fue creado exitosamented",
+        editSuccess:
+          "Device was successfully editeEl dispositivo se editó correctamented",
         deleteDeviceSuccess: "Dispositivo eliminado exitosamente",
+        deleteDeviceError:
+          "Unable to delete devicNo se puede eliminar el dispositivoe",
       },
     },
   },

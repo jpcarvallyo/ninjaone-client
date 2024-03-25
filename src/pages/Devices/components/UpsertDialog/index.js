@@ -31,7 +31,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         const response = await getDevice(id);
         setDeviceData(response);
       } catch (error) {
-        console.error("Error fetching device data:", error);
+        throw new Error(error);
       }
     };
 
@@ -69,7 +69,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
       }
       handleClose();
     } catch (error) {
-      console.error("Error while posting device:", error);
+      throw new Error(error);
     }
   };
 
@@ -83,7 +83,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
         }}
       >
         <DialogTitle sx={{ fontSize: "24px" }}>
-          {id === "" ? t("addDevice") : t("editDevice")}
+          {id === "" ? t("device.addDevice") : t("device.editDevice")}
         </DialogTitle>
         <FontAwesomeIcon
           icon={faClose}
@@ -115,7 +115,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
               <Box sx={{ marginBottom: "10px" }}>
                 <InputLabel
                   htmlFor={"name"}
-                  text={"System name"}
+                  text={t("device.systemName")}
                   required={true}
                 />
                 <Field
@@ -134,7 +134,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
               <Box sx={{ marginBottom: "10px" }}>
                 <InputLabel
                   htmlFor={"deviceType"}
-                  text={"Device type"}
+                  text={t("device.type")}
                   required={true}
                 />
                 <Field
@@ -176,7 +176,7 @@ export const UpsertDialog = ({ open, handleClose, id }) => {
               <Box sx={{ marginBottom: "10px" }}>
                 <InputLabel
                   htmlFor={"hddCapacity"}
-                  text={t("hddCapacity")}
+                  text={t("device.hddCapacity")}
                   required={true}
                 />
                 <Field

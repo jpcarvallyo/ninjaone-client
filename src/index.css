@@ -10,3 +10,8 @@ body {
 #hddCapacity.MuiInputBase-input.MuiOutlinedInput-input {
   height: 8px;
 }
+
+#control-panel
+  #search-input.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputAdornedStart {
+  font-size: 14px;
+}
