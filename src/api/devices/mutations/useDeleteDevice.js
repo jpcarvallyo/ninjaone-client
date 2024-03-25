@@ -10,11 +10,11 @@ const useDeleteDeviceData = () => {
       setLoading(true);
       const response = await deleteDevice(id);
       setLoading(false);
-      return response; // Return the response here
+      return response;
     } catch (error) {
       setError(error);
       setLoading(false);
-      throw error; // Throw the error here
+      throw error;
     }
   };
 

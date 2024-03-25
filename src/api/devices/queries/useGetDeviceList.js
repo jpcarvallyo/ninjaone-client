@@ -13,7 +13,7 @@ const useGetDeviceList = (refreshList) => {
     const fetchDeviceList = async () => {
       try {
         setLoading(true);
-        const deviceListData = await getDeviceList(signal); // Pass signal to fetcher function
+        const deviceListData = await getDeviceList(signal);
         setDeviceList(deviceListData);
         setLoading(false);
       } catch (error) {
@@ -28,11 +28,11 @@ const useGetDeviceList = (refreshList) => {
 
     fetchDeviceList();
 
-    // Cleanup function
+    // Cleanup
     return () => {
       abortController.abort(); // Cancel the request when the component unmounts or when the dependency of the effect changes
     };
-  }, [refreshList]); // Include refreshList as a dependency
+  }, [refreshList]);
 
   const memoizedDeviceList = useMemo(() => deviceList, [deviceList]);
 

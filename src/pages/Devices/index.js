@@ -58,7 +58,6 @@ function Devices() {
           <ControlPanel />
 
           <Box
-            item
             sx={{
               marginLeft: "16px",
               marginTop: "20px",

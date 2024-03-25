@@ -1,6 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import ControlPanel from "./index";
 import { DevicePageProvider } from "../../DeviceContext";

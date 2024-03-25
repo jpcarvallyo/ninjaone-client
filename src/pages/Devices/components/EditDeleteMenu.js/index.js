@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTheme } from "@mui/material/styles";
+
 function EditDeleteMenu({ itemId, handleDeviceItemClick }) {
   const theme = useTheme();
   const { t } = useTranslation();

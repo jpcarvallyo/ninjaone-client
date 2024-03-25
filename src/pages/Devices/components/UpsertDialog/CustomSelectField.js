@@ -1,9 +1,9 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import { InputLabel, MenuItem, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select, Box } from "@mui/material";
 
 const CustomSelectField = ({ label, options, ...props }) => (
-  <div>
+  <Box>
     <InputLabel htmlFor={props.name}>{label}</InputLabel>
     <Field name={props.name}>
       {({ field, form }) => (
@@ -15,7 +15,7 @@ const CustomSelectField = ({ label, options, ...props }) => (
           fullWidth
         >
           <MenuItem value="" disabled>
-            {props.placeholder || "Select"} {/* Placeholder text */}
+            {props.placeholder || "Select"}
           </MenuItem>
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -26,7 +26,7 @@ const CustomSelectField = ({ label, options, ...props }) => (
       )}
     </Field>
     <ErrorMessage name={props.name} component="div" style={{ color: "red" }} />
-  </div>
+  </Box>
 );
 
 export default CustomSelectField;
