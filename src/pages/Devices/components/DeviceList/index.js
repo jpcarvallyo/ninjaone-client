@@ -9,7 +9,7 @@ const DeviceList = () => {
 
   if (loading) {
     return (
-      <List>
+      <List data-testid="loading-skeleton">
         {[1, 2, 3, 4, 5, 6, 7].map((index) => (
           <Skeleton key={index} variant="text" height={52} />
         ))}

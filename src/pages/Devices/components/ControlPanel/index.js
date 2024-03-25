@@ -36,9 +36,9 @@ const ControlPanel = () => {
         alignItems: "center",
       }}
       id="control-panel"
+      data-testid="control-panel"
     >
       <Box
-        item
         sx={{
           display: "flex",
           justifyContent: "flex-start",
@@ -49,6 +49,7 @@ const ControlPanel = () => {
           variant="outlined"
           value={searchTerm}
           id="search-input"
+          data-testid="search-input"
           onChange={(e) => setSearchTerm(e.target.value)}
           InputProps={{
             startAdornment: (
@@ -74,8 +75,9 @@ const ControlPanel = () => {
 
         <FormControl sx={{ minWidth: 120, marginRight: "8px" }}>
           <Select
-            labelId="demo-multiple-select-label"
-            id="demo-multiple-select"
+            labelId="multiple-select-label"
+            id="multiple-select"
+            data-testid="multiple-select"
             multiple
             value={filters.type}
             onChange={(e) => handleFilterChange("type", e.target.value)}
@@ -128,6 +130,7 @@ const ControlPanel = () => {
       </Box>
       <IconButton
         onClick={handleOnClickReset}
+        data-testid="reset-btn"
         sx={{
           position: "relative",
           right: "-8px",
