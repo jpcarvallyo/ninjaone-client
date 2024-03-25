@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# NinjaOne Submission
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hello, my name is James Carvallyo. Here is my React developer showcase submission for the Senior Front End position.
 
-## Available Scripts
+## Core functionality of app
 
-In the project directory, you can run:
+- User can filter devices by a **multiple** types
+- User can sort devices by name or HDD capacity
+- User can create, update, and delete devices
 
-### `npm start`
+**Added Bonuses:**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Tests** for APIs and component unit tests via _React Testing Library_ and _Jest_
+- **Toasts** for success and failure messages to user when performing CRUD functionality
+- Laid foundation for Internationalizing the app through **translations** (English and Spanish found in the _translations.js_ file)
+- **Theming capabilities**
+- **Page routing**
+- **Version Control**
+- **Error Boundary**
+- Recorded myself demoing the app [Loom recording](https://www.loom.com/share/2f1ea50270784089865c9af6cb7235c9?sid=4d51fbcd-6ac4-4002-95ec-71b7d2979039)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to get started
 
-### `npm test`
+- Be sure to install node modules within the root of the project via your terminal:
+  `npm install`
+- When running the backend for this project [backend for this project ](https://github.com/NinjaMSP/devicesTask_serverApp)
+  > - Take note of the port that you are running the backend on. By default the frontend is looking for port 3000 in regards to the API calls but if you want to modify that, here are the steps:
+       - Navigate to the **.env** file at the root of the project. I hard coded the api url to http://localhost:3000. You could change that to be in alignment with the port you're running the backend locally or if it's hosted somewhere online, you could point to that as well.
+- When you want to run the application. Enter:
+  `npm run start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Test
 
-### `npm run build`
+If you want to run the test suite. Type the follow in the terminal:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    npm run test
