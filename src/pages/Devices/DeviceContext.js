@@ -2,9 +2,10 @@ import React, { createContext, useState, useMemo, useEffect } from "react";
 import { OS } from "utils/constants/osConstants";
 import { SORTING } from "utils/constants/";
 import useGetDeviceList from "api/devices/queries/useGetDeviceList";
+
 const DevicePageContext = createContext();
 
-export const DevicePageProvider = ({ children }) => {
+export const DevicePageProvider = ({ children, testOverrides }) => {
   const [upsertDialogOpen, setUpsertDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
@@ -16,6 +17,7 @@ export const DevicePageProvider = ({ children }) => {
     sortOrder: SORTING.ASC,
   });
   const { deviceList, loading } = useGetDeviceList(refreshList);
+
   const handleSortChange = (event) => {
     const { value } = event.target;
     const [sortBy, sortOrder] = value.split("-");
@@ -116,34 +118,35 @@ export const DevicePageProvider = ({ children }) => {
     setRefreshList(false);
   }, [deviceList]);
 
+  const contextValues = {
+    upsertDialogOpen,
+    setUpsertDialogOpen,
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    selectedDeviceId,
+    setSelectedDeviceId,
+    refreshList,
+    setRefreshList,
+    filters,
+    setFilters,
+    searchTerm,
+    setSearchTerm,
+    sortCriteria,
+    handleSortChange,
+    addDeviceButtonHandler,
+    handleUpsertDialogClose,
+    handleDeleteDialogClose,
+    handleDeviceItemClick,
+    handleFilterChange,
+    handleOnClickReset,
+    deviceList,
+    loading,
+    sortedAndFilteredDeviceList,
+    ...testOverrides,
+  };
+
   return (
-    <DevicePageContext.Provider
-      value={{
-        upsertDialogOpen,
-        setUpsertDialogOpen,
-        deleteDialogOpen,
-        setDeleteDialogOpen,
-        selectedDeviceId,
-        setSelectedDeviceId,
-        refreshList,
-        setRefreshList,
-        filters,
-        setFilters,
-        searchTerm,
-        setSearchTerm,
-        sortCriteria,
-        handleSortChange,
-        addDeviceButtonHandler,
-        handleUpsertDialogClose,
-        handleDeleteDialogClose,
-        handleDeviceItemClick,
-        handleFilterChange,
-        handleOnClickReset,
-        deviceList,
-        loading,
-        sortedAndFilteredDeviceList,
-      }}
-    >
+    <DevicePageContext.Provider value={contextValues}>
       {children}
     </DevicePageContext.Provider>
   );
