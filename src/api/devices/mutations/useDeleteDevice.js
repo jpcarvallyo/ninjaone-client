@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { deleteDevice } from "../fetchers/deleteDevice";
 
 const useDeleteDeviceData = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const deleteDeviceData = async (id) => {
+  const deleteDeviceData = useCallback(async (id) => {
     try {
       setLoading(true);
       const response = await deleteDevice(id);
@@ -16,7 +16,7 @@ const useDeleteDeviceData = () => {
       setLoading(false);
       throw error;
     }
-  };
+  }, []);
 
   return { deleteDeviceData, loading, error };
 };

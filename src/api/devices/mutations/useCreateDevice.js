@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { createDevice } from "../fetchers/createDevice";
 import { shapeFormDataForPost } from "../utils";
 
@@ -7,7 +7,7 @@ const useCreateDevice = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const postData = async (formBody) => {
+  const postData = useCallback(async (formBody) => {
     try {
       setLoading(true);
       const payload = shapeFormDataForPost(formBody);
@@ -18,7 +18,7 @@ const useCreateDevice = () => {
       setError(error);
       setLoading(false);
     }
-  };
+  }, []);
 
   return { postData, data, loading, error };
 };

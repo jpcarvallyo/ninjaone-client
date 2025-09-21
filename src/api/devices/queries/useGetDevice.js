@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getDevice } from "../fetchers/getDevice";
 
 const useGetDeviceData = (id) => {
@@ -6,22 +6,27 @@ const useGetDeviceData = (id) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getDeviceData = async () => {
+  const getDeviceData = useCallback(async () => {
+    if (!id || id === "") {
+      setData(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await getDevice(id);
-      setData(id === "" ? null : response);
+      setData(response);
       setLoading(false);
     } catch (error) {
       setError(error);
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
-    getDeviceData(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+    getDeviceData();
+  }, [getDeviceData]);
 
   return { data, loading, error };
 };

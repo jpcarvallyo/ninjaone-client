@@ -18,8 +18,8 @@ import { capitalizeWords } from "utils/capitalizeWords";
 
 const ControlPanel = () => {
   const {
-    searchTerm,
-    setSearchTerm,
+    searchInput,
+    setSearchInput,
     filters,
     handleFilterChange,
     sortCriteria,
@@ -47,10 +47,10 @@ const ControlPanel = () => {
         <TextField
           placeholder={t("search")}
           variant="outlined"
-          value={searchTerm}
+          value={searchInput}
           id="search-input"
           data-testid="search-input"
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchInput(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

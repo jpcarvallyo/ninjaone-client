@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { getDeviceList } from "../fetchers/getDeviceList"; // Import API function
 
 const useGetDeviceList = (refreshList) => {
@@ -34,9 +34,7 @@ const useGetDeviceList = (refreshList) => {
     };
   }, [refreshList]);
 
-  const memoizedDeviceList = useMemo(() => deviceList, [deviceList]);
-
-  return { deviceList: memoizedDeviceList, loading, error };
+  return { deviceList, loading, error };
 };
 
 export default useGetDeviceList;

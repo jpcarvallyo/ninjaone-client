@@ -1,4 +1,10 @@
-import React, { createContext, useState, useMemo, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
 import { OS } from "utils/constants/osConstants";
 import { SORTING } from "utils/constants/";
 import useGetDeviceList from "api/devices/queries/useGetDeviceList";
@@ -11,6 +17,7 @@ export const DevicePageProvider = ({ children, testOverrides }) => {
   const [selectedDeviceId, setSelectedDeviceId] = useState("");
   const [refreshList, setRefreshList] = useState(false);
   const [filters, setFilters] = useState({ type: [OS.ALL], capacity: "" });
+  const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [sortCriteria, setSortCriteria] = useState({
     sortBy: SORTING.NAME,
@@ -18,39 +25,39 @@ export const DevicePageProvider = ({ children, testOverrides }) => {
   });
   const { deviceList, loading } = useGetDeviceList(refreshList);
 
-  const handleSortChange = (event) => {
+  const handleSortChange = useCallback((event) => {
     const { value } = event.target;
     const [sortBy, sortOrder] = value.split("-");
     setSortCriteria({ sortBy, sortOrder });
-  };
+  }, []);
 
-  const addDeviceButtonHandler = () => {
+  const addDeviceButtonHandler = useCallback(() => {
     setSelectedDeviceId("");
     setUpsertDialogOpen(true);
-  };
+  }, []);
 
-  const handleUpsertDialogClose = () => {
+  const handleUpsertDialogClose = useCallback(() => {
     setUpsertDialogOpen(false);
     setSelectedDeviceId("");
     setRefreshList(true);
-  };
+  }, []);
 
-  const handleDeleteDialogClose = () => {
+  const handleDeleteDialogClose = useCallback(() => {
     setDeleteDialogOpen(false);
     setSelectedDeviceId("");
     setRefreshList(true);
-  };
+  }, []);
 
-  const handleDeviceItemClick = (id, type) => {
+  const handleDeviceItemClick = useCallback((id, type) => {
     setSelectedDeviceId(id);
     if (type === "edit") {
       setUpsertDialogOpen(true);
     } else {
       setDeleteDialogOpen(true);
     }
-  };
+  }, []);
 
-  const handleFilterChange = (filterName, value) => {
+  const handleFilterChange = useCallback((filterName, value) => {
     let updatedValue = value;
 
     if (value.includes(OS.ALL) && value.length > 1) {
@@ -61,17 +68,21 @@ export const DevicePageProvider = ({ children, testOverrides }) => {
       updatedValue = [OS.ALL];
     }
 
-    setFilters({ ...filters, [filterName]: updatedValue });
-  };
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterName]: updatedValue,
+    }));
+  }, []);
 
-  const handleOnClickReset = () => {
+  const handleOnClickReset = useCallback(() => {
     setSortCriteria({
       sortBy: SORTING.NAME,
       sortOrder: SORTING.ASC,
     });
     setFilters({ type: [OS.ALL], capacity: "" });
+    setSearchInput("");
     setSearchTerm("");
-  };
+  }, []);
 
   const sortedAndFilteredDeviceList = useMemo(() => {
     let filteredList = deviceList ? [...deviceList] : [];
@@ -114,9 +125,20 @@ export const DevicePageProvider = ({ children, testOverrides }) => {
     return filteredList;
   }, [deviceList, filters, searchTerm, sortCriteria]);
 
+  // Debounce search input
   useEffect(() => {
-    setRefreshList(false);
-  }, [deviceList]);
+    const timer = setTimeout(() => {
+      setSearchTerm(searchInput);
+    }, 300); // 300ms delay
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (refreshList) {
+      setRefreshList(false);
+    }
+  }, [refreshList]);
 
   const contextValues = {
     upsertDialogOpen,
@@ -129,8 +151,9 @@ export const DevicePageProvider = ({ children, testOverrides }) => {
     setRefreshList,
     filters,
     setFilters,
+    searchInput,
+    setSearchInput,
     searchTerm,
-    setSearchTerm,
     sortCriteria,
     handleSortChange,
     addDeviceButtonHandler,
